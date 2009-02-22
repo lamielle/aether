@@ -1,0 +1,17 @@
+import os
+
+def set_options(opt):
+	pass
+
+def configure(conf):
+	pass
+
+def build(bld):
+
+	inst_dir='ildp'+os.sep+'util'
+
+	install_files('PREFIX',inst_dir,'__init__.py')
+	install_files('PREFIX',inst_dir,'pymunx.py')
+	install_files('PREFIX',inst_dir,'padlib.py')
+	install_files('PREFIX',inst_dir,'shadow_sprite.py')
+	install_files('PREFIX',inst_dir,'_util.py')

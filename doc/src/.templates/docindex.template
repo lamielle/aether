@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+{% set title = 'Overview' %}
+{% block body %}
+
+	<h1>{{ docstitle }}</h1>
+	<p>
+	This is official documentation for Aether {{ release }}.
+	{% if last_updated %}Last modifed on {{ last_updated }}.{% endif %}
+	</p>
+
+	<p><strong>Sections</strong></p>
+	<table class="contentstable" align="center"><tr>
+		<td width="50%">
+			<p class="biglink"><a class="biglink" href="{{ pathto("overview") }}" >
+			Aether Overview</a><br>
+			<span class="linkdescr">Overview of what Project Aether is and how to use it.</span></p>
+
+			<p class="biglink"><a class="biglink" href="{{ pathto("reference/index") }}">The Aether API Reference</a><br>
+				 <span class="linkdescr">Describes syntax and package elements.</span></p>
+
+		</td><td width="50%">
+			<p class="biglink"><a class="biglink" href="{{ pathto("tutorials/index") }}">
+		Aether Tutorials</a><br>
+			<span class="linkdescr">Get started with Aether.</span></p>
+
+		</td></tr>
+	</table>
+
+	<p><strong>Indices and tables</strong></p>
+	<table class="contentstable" align="center"><tr>
+		<td width="50%">
+			<p class="biglink"><a class="biglink" href="{{ pathto("contents") }}">Table of Contents</a><br>
+				 <span class="linkdescr">Lists all sections and subsections.</span></p>
+<!--
+			<p class="biglink"><a class="biglink" href="{{ pathto("search") }}">Search page</a><br>
+				 <span class="linkdescr">search this documentation</span></p>
+-->
+		</td><td width="50%">
+			<p class="biglink"><a class="biglink" href="{{ pathto("genindex") }}">Index</a><br>
+				 <span class="linkdescr">All functions, classes, terms.</span></p>
+		</td></tr>
+	</table>
+
+	<p><strong>Further information</strong></p>
+	<table class="contentstable" align="center"><tr>
+		<td width="50%">
+
+			<p class="biglink"><a class="biglink" href="{{ pathto("bugs") }}"
+			>Reporting bugs</a><br>
+
+			<p class="biglink"><a class="biglink" href="{{ pathto("README") }}"
+			>About the documentation</a><br>
+
+		</td><td width="50%">
+
+			<p class="biglink"><a class="biglink" href="{{ pathto("license") }}"
+			>License</a><br>
+
+			<p class="biglink"><a class="biglink" href="{{ pathto("copyright") }}"
+			>Copyright</a><br>
+
+		</td></tr>
+	</table>
+
+	<p>
+	The <b>Official Aether Documentation</b> documents the core features of the
+	Aether framework. For further reading, the
+	<a href="http://grok.zope.org/documentation/">Community Aether Documentation</a>
+	contains deeper information on working with Aether, as well as using 
+	additional packages with Aether that are not part of the core framework.
+	</p>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+import os
+
+def set_options(opt):
+	opt.sub_options('core')
+	opt.sub_options('modules')
+	opt.sub_options('util')
+
+def configure(conf):
+	conf.sub_config('core')
+	conf.sub_config('modules')
+	conf.sub_config('util')
+
+def build(bld):
+
+	inst_dir='ildp'
+
+	install_files('PREFIX',inst_dir,'__init__.py')
+	install_files('PREFIX',inst_dir,'_ildp.py')
+
+	bld.add_subdirs('core')
+	bld.add_subdirs('modules')
+	bld.add_subdirs('util')

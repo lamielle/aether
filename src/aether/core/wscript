@@ -1,0 +1,19 @@
+import os
+
+def set_options(opt):
+	opt.sub_options('input')
+
+def configure(conf):
+	conf.sub_config('input')
+
+def build(bld):
+
+	inst_dir='ildp'+os.sep+'core'
+
+	install_files('PREFIX',inst_dir,'__init__.py')
+	install_files('PREFIX',inst_dir,'_driver.py')
+	install_files('PREFIX',inst_dir,'_module.py')
+	install_files('PREFIX',inst_dir,'_param_module.py')
+	install_files('PREFIX',inst_dir,'_input_provider.py')
+
+	bld.add_subdirs('input')

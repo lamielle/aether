@@ -1,0 +1,8 @@
+def set_options(opt):
+	opt.sub_options('ildp')
+
+def configure(conf):
+	conf.sub_config('ildp')
+
+def build(bld):
+	bld.add_subdirs('ildp')

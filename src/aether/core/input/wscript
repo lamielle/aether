@@ -1,0 +1,100 @@
+import os
+
+def set_options(opt):
+	#Add config options for OpenCV
+	opt.add_option(
+		'--opencv-prefix',
+		type='string',
+		default='/usr',
+		dest='opencv_prefix',
+		help='Prefix install directory of OpenCV (directory should have lib/ and include/). (Default: /usr)')
+
+def configure(conf):
+	import Params,os
+
+	env=conf.env
+	opt=Params.g_options
+
+	#Get the paths to the OpenCV includes and libraries
+	opencv_include=getattr(opt,'opencv_prefix','')+os.sep+'include'
+	opencv_lib=getattr(opt,'opencv_prefix','')+os.sep+'lib'
+
+	#OpenCV library
+	libconf=conf.create_library_configurator()
+	libconf.mandatory=1
+	libconf.path+=[opencv_lib]
+	libconf.name='cv'
+	libconf.run()
+
+	#OpenCV Aux library
+	libconf=conf.create_library_configurator()
+	libconf.mandatory=1
+	libconf.path+=[opencv_lib]
+	libconf.name='cvaux'
+	libconf.run()
+
+	#OpenCV HighGUI library
+	libconf=conf.create_library_configurator()
+	libconf.mandatory=1
+	libconf.path+=[opencv_lib]
+	libconf.name='highgui'
+	libconf.run()
+
+	env['CCFLAGS']+=['-fPIC','-std=c99','-I'+opencv_include]
+
+def build(bld):
+
+	inst_dir='ildp'+os.sep+'core'+os.sep+'input'
+
+	obj=bld.create_obj('cc','staticlib')
+	obj.source='img_capture.c'
+	obj.target='img_capture'
+	obj.uselib=['CV','CVAUX','HIGHGUI']
+	obj.obj_ext='.o'
+	obj.inst_var=0
+	obj.inst_dir=0
+
+	obj=bld.create_obj('cc','staticlib')
+	obj.source='shadow_geom.c'
+	obj.target='shadow_geom'
+	obj.uselib=['CV','CVAUX','HIGHGUI']
+	obj.obj_ext='.o'
+	obj.inst_var=0
+	obj.inst_dir=0
+
+	obj=bld.create_obj('cc','shlib','pyext')
+	obj.source='_input_module.c'
+	obj.target='_input'
+	obj.obj_ext='.o'
+	obj.uselib_local='img_capture shadow_geom'
+	obj.uselib=['CV','CVAUX','HIGHGUI']
+	obj.inst_var='PREFIX'
+	obj.inst_dir=inst_dir
+
+	obj=bld.create_obj('cc','program')
+	obj.source='camera.c'
+	obj.target='camera'
+	obj.obj_ext='.o'
+	obj.uselib_local='img_capture shadow_geom'
+	obj.uselib=['CV','CVAUX','HIGHGUI']
+	obj.inst_var='PREFIX'
+	obj.inst_dir=inst_dir
+	
+	obj=bld.create_obj('cc','program')
+	obj.source='shadows.c'
+	obj.target='shadows'
+	obj.obj_ext='.o'
+	obj.uselib=['CV','CVAUX','HIGHGUI']
+	obj.inst_var='PREFIX'
+	obj.inst_dir=inst_dir
+
+	obj=bld.create_obj('cc','program')
+	obj.source='shadow_geom_test.c'
+	obj.target='shadow_geom_test'
+	obj.obj_ext='.o'
+	obj.uselib_local='shadow_geom'
+	obj.inst_var='PREFIX'
+	obj.inst_dir=inst_dir
+
+	install_files('PREFIX',inst_dir,'__init__.py')
+	install_files('PREFIX',inst_dir,'_settings.py')

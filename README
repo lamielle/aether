@@ -1,0 +1,15 @@
+Interactive Light Display Project (ILDP):
+
+===== Building =====
+
+ILDP depends on OpenCV.  You must install this to build ILDP.
+
+Basic Steps:
+Configure: ./waf configure --prefix=install_prefix
+Build: ./waf build
+Install: ./waf install
+
+Example:
+./waf configure --prefix=/usr/local/lib/python2.5/site-packages --opencv-prefix=/usr
+./waf build
+./waf install

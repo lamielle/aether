@@ -1,0 +1,21 @@
+import os
+
+def set_options(opt):
+	pass
+
+def configure(conf):
+	pass
+
+def build(bld):
+
+	inst_dir='ildp'+os.sep+'modules'
+
+	install_files('PREFIX',inst_dir,'__init__.py')
+	install_files('PREFIX',inst_dir,'CalibrateModule.py')
+	install_files('PREFIX',inst_dir,'StubModule.py')
+	install_files('PREFIX',inst_dir,'PeepersModule.py')
+	install_files('PREFIX',inst_dir,'ParticleModule.py')
+	install_files('PREFIX',inst_dir,'BoidsModule.py')
+	install_files('PREFIX',inst_dir,'TestModule.py')
+	install_files('PREFIX',inst_dir,'ParamedPymunkModule.py')
+	install_files('PREFIX',inst_dir,'PymunkModule.py')
