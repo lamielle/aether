@@ -1,16 +1,16 @@
-from ildp.core import ILDModule
-from ildp.core.input import Settings
+from aether.core import AetherModule
+from aether.core.input import Settings
 from ocempgui.widgets import *
 from ocempgui.widgets.Constants import *
 import pygame
 from pygame.locals import *
 
-class ILDParamModule(ILDModule) :
-  """ 'abstract' subclass of IDLModule that includes support for screen and parameter panels
+class AetherParamModule(AetherModule) :
+  """ 'abstract' subclass of AetherModule that includes support for screen and parameter panels
   """
 
   def __init__(self, driver, **kwargs) :
-    ILDModule.__init__(self, driver, **kwargs)
+    AetherModule.__init__(self, driver, **kwargs)
     self.show_params = False
 
     # parameter window stuff
@@ -32,7 +32,7 @@ class ILDParamModule(ILDModule) :
     widgets = self.get_parameter_widgets() 
 
     if driver.debug :
-      from ildp.core import InputProvider
+      from aether.core import InputProvider
 
       def change_sim_shape(btn) :
         btn.set_active(True)

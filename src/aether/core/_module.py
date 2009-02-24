@@ -1,7 +1,7 @@
 
 # 'abstract' class that all other modules should 'implement'
-class ILDModule :
-  """ Base ILDP module class
+class AetherModule :
+  """ Base Aether module class
   """
 
   def __init__(self, driver, **kwargs) :
@@ -30,15 +30,11 @@ class ILDModule :
   def draw(self,screen) :
     """main draw method, do everything here
     """
-
-    __module__ = 'ildp.core'
     raise Exception('The draw(screen) method must be overridden in custom ILDModules')
 
   def _process_event_delegate(self,event) :
     self.process_event(event)
 
-  """Dude, fuck you
-  """
   def process_event(self,event) :
     """`main` event processing function, handle events here
     """

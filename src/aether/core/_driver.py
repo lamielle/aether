@@ -4,21 +4,21 @@ from pygame.color import *
 from pygame.image import tostring
 import pygame.mouse
 import Image
-import ildp,ildp.core,ildp.modules
-from ildp.core import InputProvider
+import aether,aether.core,aether.modules
+from aether.core import InputProvider
 
-class ILDDriver :
-  """The driver class for the Interactive Light Display system.  This class controls the pygame event loop that drives each of its component ILDModules.  Example usage::
+class AetherDriver :
+  """The driver class for the Interactive Light Display system.  This class controls the pygame event loop that drives each of its component AetherModules.  Example usage::
 
-    driver = ILDDriver(640,DiffProviderSimulator())
-    driver.register_module(TestILDModule(driver,THECOLORS["blue"]))
+    driver = AetherDriver(640,DiffProviderSimulator())
+    driver.register_module(TestAetherModule(driver,THECOLORS["blue"]))
     driver.register_module(PymunkModule(driver))
-    driver.register_module(TestILDModule(driver,THECOLORS["white"]))
+    driver.register_module(TestAetherModule(driver,THECOLORS["white"]))
     driver.run()
 
-The above instantiates an ILDDriver object with screen width of 640 pixels and a DiffProviderSimulator that does not require a connected camera.  If a camera is attached and all the necessary supporting software is available the DiffProvider object will fetch images and translate them into something potentially useful.  See DiffProvider and ILDCalibrationModule documentation for more details.
+The above instantiates an AetherDriver object with screen width of 640 pixels and a DiffProviderSimulator that does not require a connected camera.  If a camera is attached and all the necessary supporting software is available the DiffProvider object will fetch images and translate them into something potentially useful.  See DiffProvider and AetherCalibrationModule documentation for more details.
 
-See the appropriate documentation for TestILDModule and PymunkModule modules.
+See the appropriate documentation for TestAetherModule and PymunkModule modules.
   """
 
   def __init__(self,height,modules=[],debug=False) :
@@ -38,7 +38,7 @@ See the appropriate documentation for TestILDModule and PymunkModule modules.
   def run(self) :
 
     if len(self.modules) == 0 :
-      raise Exception('ILDDriver must have at least one module registered.')
+      raise Exception('AetherDriver must have at least one module registered.')
 
     clock = pygame.time.Clock()
     running = True

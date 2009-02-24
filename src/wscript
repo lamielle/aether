@@ -1,8 +1,8 @@
 def set_options(opt):
-	opt.sub_options('ildp')
+	opt.sub_options('aether')
 
 def configure(conf):
-	conf.sub_config('ildp')
+	conf.sub_config('aether')
 
 def build(bld):
-	bld.add_subdirs('ildp')
+	bld.add_subdirs('aether')

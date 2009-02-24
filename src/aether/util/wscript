@@ -8,7 +8,7 @@ def configure(conf):
 
 def build(bld):
 
-	inst_dir='ildp'+os.sep+'util'
+	inst_dir='aether'+os.sep+'util'
 
 	install_files('PREFIX',inst_dir,'__init__.py')
 	install_files('PREFIX',inst_dir,'pymunx.py')

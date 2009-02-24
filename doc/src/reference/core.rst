@@ -2,15 +2,15 @@
 ===================================
 
 
-.. automodule:: ildp.core
+.. automodule:: aether.core
 
-.. autoclass:: ILDDriver
+.. autoclass:: AetherDriver
    :members:
 
-.. autoclass:: ILDModule
+.. autoclass:: AetherModule
    :members:
 
-.. autoclass:: ILDParamModule
+.. autoclass:: AetherParamModule
    :members:
 
 .. autoclass:: InputProvider

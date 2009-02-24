@@ -1,5 +1,5 @@
-import ildp.core.input
-from ildp.core.input import Settings
+import aether.core.input
+from aether.core.input import Settings
 from pygame import mouse
 from math import cos,sin,pi
 import os
@@ -31,18 +31,18 @@ class InputProvider(object):
 
   #Camera input methods
   def get_com(self):
-    p = ildp.core.input.get_com()
+    p = aether.core.input.get_com()
     return int((p[0]/100.)*self.dims[0]), int((p[1]/100.)*self.dims[1])
 
   def get_verts(self):
-    verts = ildp.core.input.get_verts()
+    verts = aether.core.input.get_verts()
     if len(verts) != 0 :
       for i,p in enumerate(verts) :
         verts[i] = int((p[0]/100.)*self.dims[0]), int((p[1]/100.)*self.dims[1])
     return verts
 
   def get_polys(self):
-    polys = ildp.core.input.get_polys()
+    polys = aether.core.input.get_polys()
     for poly in polys :
       if len(poly) != 0 :
         for i,p in enumerate(poly) :
@@ -50,10 +50,10 @@ class InputProvider(object):
     return polys
 
   def get_lp_pts(self):
-    return ildp.core.input.get_lp_pts()
+    return aether.core.input.get_lp_pts()
 
   def calibrate(self):
-    ildp.core.input.calibrate(self.settings)
+    aether.core.input.calibrate(self.settings)
     self.settings.save(self.settings_file_name)
 
   #Debug input methods

@@ -2,7 +2,7 @@
 ===============================================
 
 
-.. automodule:: ildp.modules
+.. automodule:: aether.modules
 
 .. autoclass:: StubModule
    :members:

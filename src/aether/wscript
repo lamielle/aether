@@ -12,10 +12,10 @@ def configure(conf):
 
 def build(bld):
 
-	inst_dir='ildp'
+	inst_dir='aether'
 
 	install_files('PREFIX',inst_dir,'__init__.py')
-	install_files('PREFIX',inst_dir,'_ildp.py')
+	install_files('PREFIX',inst_dir,'_aether.py')
 
 	bld.add_subdirs('core')
 	bld.add_subdirs('modules')

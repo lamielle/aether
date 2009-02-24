@@ -2,4 +2,4 @@
 ================================
 
 
-.. automodule:: ildp.util
+.. automodule:: aether.util

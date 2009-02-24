@@ -44,7 +44,7 @@ def configure(conf):
 
 def build(bld):
 
-	inst_dir='ildp'+os.sep+'core'+os.sep+'input'
+	inst_dir='aether'+os.sep+'core'+os.sep+'input'
 
 	obj=bld.create_obj('cc','staticlib')
 	obj.source='img_capture.c'

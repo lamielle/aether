@@ -8,7 +8,7 @@ def configure(conf):
 
 def build(bld):
 
-	inst_dir='ildp'+os.sep+'modules'
+	inst_dir='aether'+os.sep+'modules'
 
 	install_files('PREFIX',inst_dir,'__init__.py')
 	install_files('PREFIX',inst_dir,'CalibrateModule.py')
