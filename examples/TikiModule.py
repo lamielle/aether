@@ -17,7 +17,7 @@ class TikiModule(AetherModule) :
 		AetherModule.__init__(self,*args)
 
 		# load our image, this will look in the directory where the file is executed
-		self.tiki = pygame.image.load("tiki.png").convert()
+		self.tiki = pygame.image.load("tiki.png")
 
 		# make any white in the image transparent
 		self.tiki.set_colorkey(THECOLORS["white"])
@@ -28,7 +28,7 @@ class TikiModule(AetherModule) :
 		raw_image = self.input.get_curr_frame()
 
 		# scale incoming image to the driver screen size and blit it to the screen
-		scaled_raw_image = pygame.transform.scale(raw_image,self.dims).convert()
+		scaled_raw_image = pygame.transform.scale(raw_image,self.dims)
 		screen.blit(scaled_raw_image,(0,0))
 
 		# get the rectangle of the biggest face the input provider can find
@@ -40,7 +40,7 @@ class TikiModule(AetherModule) :
 			width, height = face[1][0]-face[0][0], face[2][1]-face[1][1]
 
 			# scale the original image onto a new surface and draw to the screen
-			scaled_tiki = pygame.transform.scale(self.tiki,(width,height)).convert()
+			scaled_tiki = pygame.transform.scale(self.tiki,(width,height))
 			screen.blit(scaled_tiki,face[0])
 
 if __name__ == "__main__" :

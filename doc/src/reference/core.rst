@@ -15,3 +15,6 @@
 
 .. autoclass:: InputProvider
    :members:
+
+.. autoclass:: FaceInputProvider
+   :members:
