@@ -1,8 +1,8 @@
-Interactive Light Display Project (ILDP):
+Project Aether:
 
 ===== Building =====
 
-ILDP depends on OpenCV.  You must install this to build ILDP.
+Aether depends on OpenCV.  You must install this to build Aether.
 
 Basic Steps:
 Configure: ./waf configure --prefix=install_prefix
