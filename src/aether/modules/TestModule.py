@@ -1,6 +1,6 @@
 from aether.core import AetherModule
 
-class TestAetherModule(AetherModule):
+class TestModule(AetherModule):
 
 	def __init__(self, driver, color, **kwargs) :
 		AetherModule.__init__(self,driver,**kwargs)

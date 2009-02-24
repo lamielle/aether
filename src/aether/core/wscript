@@ -15,5 +15,6 @@ def build(bld):
 	install_files('PREFIX',inst_dir,'_module.py')
 	install_files('PREFIX',inst_dir,'_param_module.py')
 	install_files('PREFIX',inst_dir,'_input_provider.py')
+	install_files('PREFIX',inst_dir,'FaceInputProvider.py')
 
 	bld.add_subdirs('input')
