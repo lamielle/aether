@@ -36,6 +36,10 @@ class TikiModule(AetherModule) :
 
 		# if it found a face, draw the mask
 		if face is not None :
+
+			# get_verts() returns coordinates normalized to [0,1], scale it to curr dimensions
+			face = [(int(x[0]*self.dims[0]),int(x[1]*self.dims[1])) for x in face]
+
 			# figure out the face's dimensions
 			width, height = face[1][0]-face[0][0], face[2][1]-face[1][1]
 
