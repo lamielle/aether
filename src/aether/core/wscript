@@ -4,6 +4,8 @@ def set_options(opt):
 	opt.sub_options('input')
 
 def configure(conf):
+	conf.check_python_module('opencv')
+
 	conf.sub_config('input')
 
 def build(bld):
