@@ -5,8 +5,9 @@ import pygame.transform
 
 class FaceInputProvider(InputProvider) :
 
-	def __init__(self,cascade_file,flip=False) :
+	def __init__(self,cascade_file,image_dims=(320,240),flip=False) :
 		self.flip = flip
+		self.image_dims = list(image_dims)
 		self.init_camera(0)
 		self.cascade = cv.cvLoadHaarClassifierCascade(cascade_file,cv.cvSize(40,40))
 
@@ -19,17 +20,14 @@ class FaceInputProvider(InputProvider) :
 		# highgui.cvCreateCameraCapture(id) takes ownership of the pointer so cvSetCaptureProperty won't work, disown it before setting
 		self.capture.disown()
 
-		w,h = 320,240
-		
-		highgui.cvSetCaptureProperty(self.capture,highgui.CV_CAP_PROP_FRAME_WIDTH,w)
-		highgui.cvSetCaptureProperty(self.capture,highgui.CV_CAP_PROP_FRAME_HEIGHT,h)
+		highgui.cvSetCaptureProperty(self.capture,highgui.CV_CAP_PROP_FRAME_WIDTH,self.image_dims[0])
+		highgui.cvSetCaptureProperty(self.capture,highgui.CV_CAP_PROP_FRAME_HEIGHT,self.image_dims[1])
 
-		w = highgui.cvGetCaptureProperty(self.capture,highgui.CV_CAP_PROP_FRAME_WIDTH)
-		h = highgui.cvGetCaptureProperty(self.capture,highgui.CV_CAP_PROP_FRAME_HEIGHT)
+		self.image_dims[0] = highgui.cvGetCaptureProperty(self.capture,highgui.CV_CAP_PROP_FRAME_WIDTH)
+		self.image_dims[1] = highgui.cvGetCaptureProperty(self.capture,highgui.CV_CAP_PROP_FRAME_HEIGHT)
+		self.image_dims = tuple([int(x) for x in self.image_dims])
 
 		self.capture.acquire()
-
-		self.image_dims = (int(w),int(h))
 
 	def _detect_faces(self) :
 		"""Run OpenCV's Haar detection on the current frame, returning the rectangle with the largest area"""
@@ -38,7 +36,10 @@ class FaceInputProvider(InputProvider) :
 
 		# faces is cv.CvSeq of cv.CvRect objects that have x,y,width,height members
 		frame = self._get_cv_frame()
-		faces = cv.cvHaarDetectObjects(frame,self.cascade,storage,1.1,2,cv.CV_HAAR_DO_CANNY_PRUNING,cv.cvSize(40,40))
+		cvt_gray = cv.cvCreateImage(cv.cvSize(frame.width,frame.height),8,1)
+		cv.cvCvtColor(frame,cvt_gray,cv.CV_BGR2GRAY)
+		#faces = cv.cvHaarDetectObjects(frame,self.cascade,storage,1.1,2,cv.CV_HAAR_DO_CANNY_PRUNING,cv.cvSize(20,20))
+		faces = cv.cvHaarDetectObjects(cvt_gray,self.cascade,storage,1.1,2,cv.CV_HAAR_DO_CANNY_PRUNING,cv.cvSize(20,20))
 		cv.cvReleaseMemStorage(storage)
 
 		# find biggest face, probably the one we want
@@ -72,11 +73,11 @@ class FaceInputProvider(InputProvider) :
 		"""Returns the point closest to the center of the bounding face rectangle as a tuple, calculated as (x+(width/2),y+(height/2)), normalized to [0,1]"""
 		face = self._detect_faces()
 		if face is not None :
-			lst = (int((face.x+(face.width/2.)),int(face.y+(face.height/2.))))
+			lst = int(face.x+(face.width/2.)),int(face.y+(face.height/2.))
 
 			# normalize
 			w,h = [float(x) for x in self.image_dims]
-			lst = tuple([(x[0]/w,x[1]/h) for x in lst])
+			lst = (lst[0]/w,lst[1]/h)
 			return lst
 		return None
 
