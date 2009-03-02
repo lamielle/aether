@@ -49,7 +49,7 @@ class CameraInputProvider(InputProvider):
 		#Set the scale flag depending on the results of setting the capture dimensions
 		if self.capture_dims==read_dims:
 			self.scale=False
-		else: 
+		else:
 			self.scale=True
 
 	def get_frame(self):

@@ -17,7 +17,7 @@ class FaceScaler(AetherModule) :
 
 		AetherModule.__init__(self,*args)
 		#self.bg = pygame.image.load("/home/labadorf/Documents/backgrounds/img_1191.jpg")
-		self.bg = pygame.image.load("/home/labadorf/Pictures/cscstage.jpg")
+		self.bg = pygame.image.load("/home/lamielle/pictures/jimmy_eat_world.jpg")
 
 		#self.d = self.dims[0] # distance from screen to face, calibrated as width by default
 		self.d = 800
@@ -92,7 +92,7 @@ if __name__ == "__main__" :
 
 	# initialize a FaceInputProvider that looks for faces from the camera image
 	#face_input = FaceInputProvider("/home/labadorf/development/aether/examples/haarcascade_frontalface_alt.xml",image_dims=(240,180),flip=True)
-	face_input = FaceInputProvider("/home/labadorf/development/aether/examples/haarcascade_frontalface_alt.xml",image_dims=(320,240),flip=True)
+	face_input = FaceInputProvider(0,(320,240),"/home/lamielle/aether/examples/haarcascade_frontalface_alt.xml",flip=False)
 
 	# create the driver
 	driver = AetherDriver(640,input=face_input)
