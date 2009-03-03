@@ -1,4 +1,3 @@
-
 # 'abstract' class that all other modules should 'implement'
 class AetherModule :
 	""" Base Aether module class
