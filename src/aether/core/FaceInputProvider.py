@@ -28,7 +28,7 @@ class FaceInputProvider(CameraInputProvider):
 			cv.cvFlip(frame,None,1)
 		return frame
 
-	def _detect_faces(self) :
+	def _detect_faces(self,biggest=False) :
 		"""Run OpenCV's Haar detection on the current frame, returning the rectangle with the largest area"""
 		storage=cv.cvCreateMemStorage(0)
 		cv.cvClearMemStorage(storage)
@@ -41,12 +41,15 @@ class FaceInputProvider(CameraInputProvider):
 		faces = cv.cvHaarDetectObjects(cvt_gray,self.cascade,storage,1.1,2,cv.CV_HAAR_DO_CANNY_PRUNING,cv.cvSize(20,20))
 		cv.cvReleaseMemStorage(storage)
 
-		# find biggest face, probably the one we want
-		fat_face = None
-		for f in faces :
-			if fat_face is None or f.height * f.width > fat_face.height * fat_face.width :
-				fat_face = f
-		return fat_face
+		if biggest :
+			# find biggest face, probably the one we want
+			fat_face = None
+			for f in faces :
+				if fat_face is None or f.height * f.width > fat_face.height * fat_face.width :
+					fat_face = f
+			return fat_face
+		else :
+			return faces
 
 	def get_curr_frame(self) :
 		"""Capture the current frame from OpenCV, returns pygame.Surface object"""
@@ -63,7 +66,7 @@ class FaceInputProvider(CameraInputProvider):
 
 	def get_com(self) :
 		"""Returns the point closest to the center of the bounding face rectangle as a tuple, calculated as (x+(width/2),y+(height/2)), normalized to [0,1]"""
-		face = self._detect_faces()
+		face = self._detect_faces(biggest=True)
 		if face is not None :
 			lst = int(face.x+(face.width/2.)),int(face.y+(face.height/2.))
 
@@ -75,7 +78,7 @@ class FaceInputProvider(CameraInputProvider):
 
 	def get_verts(self) :
 		"""Returns a tuple of points as tuples containing the bounding face rectangle wound clockwise from top left point, normalized to [0,1]"""
-		face = self._detect_faces()
+		face = self._detect_faces(biggest=True)
 		if face is not None :
 			lst = (face.x,face.y),((face.x+face.width),face.y),((face.x+face.width),(face.y+face.height)),(face.x,(face.y+face.width))
 			# normalize
@@ -86,4 +89,16 @@ class FaceInputProvider(CameraInputProvider):
 
 	def get_polys(self) :
 		"""The same as get_verts since we're only capturing the biggest face right now"""
-		return self.get_verts()
+		cv_faces = self._detect_faces()
+		faces = []
+		for face in cv_faces :
+			f = (face.x,face.y),((face.x+face.width),face.y),((face.x+face.width),(face.y+face.height)),(face.x,(face.y+face.width))
+			# normalize
+			w,h = [float(x) for x in self.image_dims]
+			faces.append(tuple([(x[0]/w,x[1]/h) for x in f]))
+
+		# sort the faces so they are in order by descending area
+		def area(f) :
+			return f[1][0]-f[0][0]*f[2][1]-f[0][1]
+		faces.sort(lambda x,y: cmp(area(y),area(x)))
+		return faces
