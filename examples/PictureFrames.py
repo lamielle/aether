@@ -24,7 +24,6 @@ class PictureFrames(AetherModule) :
 
 		faces = self.input.get_polys()
 
-		
 		if len(faces) > 0 :
 			for i,face in enumerate(faces) :
 
@@ -40,7 +39,7 @@ class PictureFrames(AetherModule) :
 				screen.blit(num,self.frame_coords[i])
 
 if __name__ == "__main__" :
-	face_input = FaceInputProvider(0,(320,240),"/home/labadorf/development/aether/examples/haarcascade_frontalface_alt.xml",flip=True)
+	face_input = FaceInputProvider(0,(640,480),"/home/labadorf/development/aether/examples/haarcascade_frontalface_alt.xml",flip=True)
 	driver = AetherDriver(640,input=face_input)
 	driver.register_module(PictureFrames(driver))
 	driver.run()

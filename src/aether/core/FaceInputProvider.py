@@ -5,8 +5,7 @@ This class provides input using the location of faces that are detected using Ha
 """
 
 from opencv import cv,highgui
-from aether.core import CameraInputProvider
-
+from aether.core import CameraInputProvider 
 import pygame.transform
 
 class FaceInputProvider(CameraInputProvider):
@@ -21,6 +20,11 @@ class FaceInputProvider(CameraInputProvider):
 		self.flip=flip
 
 		self.image_dims=tuple((int(dim) for dim in self.capture_dims))
+		self.storage = cv.cvCreateMemStorage(0)
+		cv.cvClearMemStorage(self.storage)
+
+	def __del__(self) :
+		cv.cvReleaseMemStorage(self.storage)
 
 	def get_frame(self):
 		frame=CameraInputProvider.get_frame(self)
@@ -30,16 +34,17 @@ class FaceInputProvider(CameraInputProvider):
 
 	def _detect_faces(self,biggest=False) :
 		"""Run OpenCV's Haar detection on the current frame, returning the rectangle with the largest area"""
-		storage=cv.cvCreateMemStorage(0)
-		cv.cvClearMemStorage(storage)
+		#cv.cvClearMemStorage(self.storage)
 
 		# faces is cv.CvSeq of cv.CvRect objects that have x,y,width,height members
 		frame = self.get_frame()
+
+		# convert image to grayscale and scale it down to 240,180 for speed
 		cvt_gray = cv.cvCreateImage(cv.cvSize(frame.width,frame.height),8,1)
 		cv.cvCvtColor(frame,cvt_gray,cv.CV_BGR2GRAY)
 		#faces = cv.cvHaarDetectObjects(frame,self.cascade,storage,1.1,2,cv.CV_HAAR_DO_CANNY_PRUNING,cv.cvSize(20,20))
-		faces = cv.cvHaarDetectObjects(cvt_gray,self.cascade,storage,1.1,2,cv.CV_HAAR_DO_CANNY_PRUNING,cv.cvSize(20,20))
-		cv.cvReleaseMemStorage(storage)
+		faces = cv.cvHaarDetectObjects(cvt_gray,self.cascade,self.storage,1.1,2,cv.CV_HAAR_DO_CANNY_PRUNING,cv.cvSize(60,60))
+		#cv.cvReleaseMemStorage(self.storage)
 
 		if biggest :
 			# find biggest face, probably the one we want

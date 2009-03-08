@@ -50,7 +50,7 @@ class TikiModule(AetherModule) :
 if __name__ == "__main__" :
 
 	# initialize a FaceInputProvider that looks for faces from the camera image
-	face_input = FaceInputProvider(0,(320,240),"/home/lamielle/aether/examples/haarcascade_frontalface_alt.xml",flip=False)
+	face_input = FaceInputProvider(0,(320,240),"/home/labadorf/development/aether/examples/haarcascade_frontalface_alt.xml")
 
 	# create the driver
 	driver = AetherDriver(640,input=face_input)
