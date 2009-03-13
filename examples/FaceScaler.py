@@ -16,8 +16,8 @@ class FaceScaler(AetherModule) :
 	def __init__(self,*args) :
 
 		AetherModule.__init__(self,*args)
-		#self.bg = pygame.image.load("/home/labadorf/Documents/backgrounds/img_1191.jpg")
-		self.bg = pygame.image.load("/home/lamielle/pictures/jimmy_eat_world.jpg")
+		self.bg = pygame.image.load("/home/labadorf/Documents/backgrounds/img_1191.jpg")
+		#self.bg = pygame.image.load("/home/lamielle/pictures/jimmy_eat_world.jpg")
 
 		#self.d = self.dims[0] # distance from screen to face, calibrated as width by default
 		self.d = 800

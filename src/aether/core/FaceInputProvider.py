@@ -19,11 +19,13 @@ class FaceInputProvider(CameraInputProvider):
 
 		self.flip=flip
 
-		self._fd_dims = (180,120)
 
 		self.image_dims=tuple((int(dim) for dim in self.capture_dims))
 		self.storage = cv.cvCreateMemStorage(0)
 		cv.cvClearMemStorage(self.storage)
+
+		self._fd_dims = (240,180)
+		#self._fd_dims = (180,120)
 
 	def __del__(self) :
 		cv.cvReleaseMemStorage(self.storage)
@@ -34,18 +36,29 @@ class FaceInputProvider(CameraInputProvider):
 			cv.cvFlip(frame,None,1)
 		return frame
 
-	def _get_fd_frame(self,frame) :
+	def _get_fd_frame(self) :
+		frame = self._get_cv_frame()
 		# convert image to grayscale and scale it down to 240,180 for speed
 		cvt_gray = cv.cvCreateImage(cv.cvSize(frame.width,frame.height),8,1)
 		cv.cvCvtColor(frame,cvt_gray,cv.CV_BGR2GRAY)
 		scaled_gray = cv.cvCreateImage(cv.cvSize(self._fd_dims[0],self._fd_dims[1]),8,1)
-#		cv.cvResize(cvt_gray,scaled_gray,cv.CV_INTER_LINEAR)
+		cv.cvResize(cvt_gray,scaled_gray,cv.CV_INTER_LINEAR)
 		return scaled_gray
 
 	def _cv_to_pygame(self,frame) :
-		# curr_frame is in BGR format, convert it to RGB so the sky isn't orange
-		cvt_color = cv.cvCreateImage(cv.cvSize(frame.width,frame.height),frame.depth,frame.nChannels)
-		cv.cvCvtColor(frame,cvt_color,cv.CV_BGR2RGB)
+
+		# scale the image to size of the window
+		cvt_scale = cv.cvCreateImage(cv.cvSize(self.image_dims[0],self.image_dims[1]),frame.depth,frame.nChannels)
+		cv.cvResize(frame,cvt_scale,cv.CV_INTER_LINEAR)
+
+		# need to convert the colorspace differently depending on where the image came from
+		cvt_color = cv.cvCreateImage(cv.cvSize(cvt_scale.width,cvt_scale.height),cvt_scale.depth,3)
+		if frame.nChannels == 3 : # image is BGR
+			# frame is in BGR format, convert it to RGB so the sky isn't orange
+			cv.cvCvtColor(cvt_scale,cvt_color,cv.CV_BGR2RGB)
+		elif frame.nChannels == 1 : # image is grayscale
+			# frame is grayscale
+			cv.cvCvtColor(cvt_scale,cvt_color,cv.CV_GRAY2RGB)
 
 		# create a pygame surface
 		frame_surface=pygame.image.frombuffer(cvt_color.imageData,self.image_dims,'RGB')
@@ -54,9 +67,8 @@ class FaceInputProvider(CameraInputProvider):
 
 	def get_fd_frame(self) :
 		"""Returns the image passed to Haar Classifier.  The image used for face detection is scaled down for efficiency."""
-		frame = self._get_cv_frame()
-		fd_frame = self._get_fd_frame(frame)
-		fd_surface = self._cv_to_pygame(frame)
+		fd_frame = self._get_fd_frame()
+		fd_surface = self._cv_to_pygame(fd_frame)
 		return fd_surface
 
 	def get_curr_frame(self) :
@@ -67,21 +79,18 @@ class FaceInputProvider(CameraInputProvider):
 
 	def _detect_faces(self,biggest=False) :
 		"""Run OpenCV's Haar detection on the current frame, returning the rectangle with the largest area"""
-		return []
-		#cv.cvClearMemStorage(self.storage)
+
+		# get smaller grayscale image
+		scaled_gray = self._get_fd_frame()
 
 		# faces is cv.CvSeq of cv.CvRect objects that have x,y,width,height members
-		frame = self._get_cv_frame()
-
-		sc_w,sc_h = 180,120
-		scaled_gray = self._get_fd_frame(frame)
-		faces = cv.cvHaarDetectObjects(scaled_gray,self.cascade,self.storage,1.1,2,cv.CV_HAAR_DO_CANNY_PRUNING,cv.cvSize(60,60))
+		cv_faces = cv.cvHaarDetectObjects(scaled_gray,self.cascade,self.storage,1.1,2,cv.CV_HAAR_DO_CANNY_PRUNING,cv.cvSize(10,10))
 
 		faces = []
 		max_id = -1
 		max_area = -1
-		w,h = [float(x) for x in (sc_w,sc_h)]
-		for i,face in enumerate(faces) :
+		w,h = [float(x) for x in self._fd_dims]
+		for i,face in enumerate(cv_faces) :
 			f = (face.x,face.y),((face.x+face.width),face.y),((face.x+face.width),(face.y+face.height)),(face.x,(face.y+face.width))
 
 			# keep track of the face with the largest area in case user wants it
