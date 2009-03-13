@@ -18,12 +18,14 @@ class PictureFrames(AetherModule) :
 	def draw(self,screen) :
 
 		raw_image = self.input.get_curr_frame()
-		scaled_raw_image = pygame.transform.scale(raw_image,self.dims)
-#		screen.blit(scaled_raw_image,(0,0))
-		screen.blit(self.frame,(0,0))
+		#raw_image = self.input.get_fd_frame()
+		#scaled_raw_image = pygame.transform.scale(raw_image,self.dims)
+		#screen.blit(scaled_raw_image,(0,0))
+		screen.blit(raw_image,(0,0))
 
 		faces = self.input.get_polys()
 
+		"""
 		if len(faces) > 0 :
 			for i,face in enumerate(faces) :
 
@@ -37,6 +39,7 @@ class PictureFrames(AetherModule) :
 				#pygame.draw.rect(screen,THECOLORS['red'],pygame.Rect(face[0],dims),1)
 				num = self.font.render(str(i),False,THECOLORS['red'])
 				screen.blit(num,self.frame_coords[i])
+		"""
 
 if __name__ == "__main__" :
 	face_input = FaceInputProvider(0,(640,480),"/home/labadorf/development/aether/examples/haarcascade_frontalface_alt.xml",flip=True)
