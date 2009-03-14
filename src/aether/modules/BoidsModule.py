@@ -2,7 +2,6 @@ import pygame, pygame.key
 from pygame.color import THECOLORS
 from pygame.locals import *
 from aether.core import AetherParamModule
-import aether.core.input
 
 import math
 from random import randint

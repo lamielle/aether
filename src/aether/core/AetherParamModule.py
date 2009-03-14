@@ -1,5 +1,5 @@
 from aether.core import AetherModule
-from aether.core.input import Settings
+from aether.core import Settings
 from ocempgui.widgets import *
 from ocempgui.widgets.Constants import *
 import pygame

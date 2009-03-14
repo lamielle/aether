@@ -1,5 +1,4 @@
-import aether.core.input
-from aether.core.input import Settings
+from aether.core import Settings
 from pygame import mouse
 from math import cos,sin,pi
 import os

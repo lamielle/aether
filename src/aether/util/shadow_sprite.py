@@ -1,7 +1,6 @@
 import pygame, pygame.key, pygame.sprite, pygame.surfarray
 import pygame.mouse
 from pygame.color import THECOLORS
-import aether.core.input
 import math
 
 class Wall(pygame.sprite.Sprite) :
