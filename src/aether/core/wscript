@@ -3,6 +3,8 @@ import os
 def set_options(opt): pass
 
 def configure(conf):
+	conf.check_python_module('pygame')
+	conf.check_python_module('ocempgui')
 	conf.check_python_module('opencv')
 
 def build(bld):
