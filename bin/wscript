@@ -1,0 +1,10 @@
+def set_options(opt): pass
+
+def configure(conf): pass
+
+def build(bld):
+	import os
+
+	inst_dir='aether'+os.sep+'bin'
+
+	install_files('PREFIX',inst_dir,'aether',chmod=0755)
