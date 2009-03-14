@@ -17,7 +17,7 @@ class Settings(object):
 		if None!=file_name: self.load(file_name)
 
 	def __str__(self):
-		return yaml.dump(self._get_settings_dict(),default_flow_style=False)
+		return yaml.dump(self._get_settings_dict(),default_flow_style=False).strip()
 
 	def save(self,file_name):
 		if self.debug: print "Writing settings to file '%s'...\n"%(file_name)
