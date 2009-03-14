@@ -5,7 +5,7 @@ This class provides input using the location of faces that are detected using Ha
 """
 
 from opencv import cv,highgui
-from aether.core import CameraInputProvider 
+from aether.core import CameraInputProvider
 import pygame.transform
 
 class FaceInputProvider(CameraInputProvider):
@@ -28,7 +28,11 @@ class FaceInputProvider(CameraInputProvider):
 		#self._fd_dims = (180,120)
 
 	def __del__(self) :
-		cv.cvReleaseMemStorage(self.storage)
+		#Only attempt to access self.storage if it exists as a field of this class
+		if 'storage' in self.__dict__:
+			#Only release the field if memory has been allocated here
+			if None!=self.storage:
+				cv.cvReleaseMemStorage(self.storage)
 
 	def _get_cv_frame(self):
 		frame=CameraInputProvider.get_frame(self)
