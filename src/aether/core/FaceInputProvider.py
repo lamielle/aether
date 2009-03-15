@@ -24,8 +24,8 @@ class FaceInputProvider(CameraInputProvider):
 		self.storage = cv.cvCreateMemStorage(0)
 		cv.cvClearMemStorage(self.storage)
 
-		self._fd_dims = (240,180)
-		#self._fd_dims = (180,120)
+		#self._fd_dims = (240,180)
+		self._fd_dims = (180,120)
 
 	def __del__(self) :
 		#Only attempt to access self.storage if it exists as a field of this class
@@ -42,7 +42,7 @@ class FaceInputProvider(CameraInputProvider):
 
 	def _get_fd_frame(self) :
 		frame = self._get_cv_frame()
-		# convert image to grayscale and scale it down to 240,180 for speed
+		# convert image to grayscale and scale it down for speed
 		cvt_gray = cv.cvCreateImage(cv.cvSize(frame.width,frame.height),8,1)
 		cv.cvCvtColor(frame,cvt_gray,cv.CV_BGR2GRAY)
 		scaled_gray = cv.cvCreateImage(cv.cvSize(self._fd_dims[0],self._fd_dims[1]),8,1)
