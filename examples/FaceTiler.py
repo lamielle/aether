@@ -5,7 +5,7 @@ from aether.sprites import FaceSprite, FaceSpriteTracker
 import pygame.image, pygame.font, pygame.sprite, pygame.transform, pygame.draw
 from pygame.color import THECOLORS
 
-class FacePanes(AetherModule) :
+class FaceTiler(AetherModule) :
 
 	def __init__(self,driver,grid=(3,2),*args) :
 		# need to call parent class' init method explicitly in python
@@ -14,7 +14,7 @@ class FacePanes(AetherModule) :
 		self.pane_size = (self.dims[0]/grid[0],self.dims[1]/grid[1])
 		self.grid_coords = [(i*self.pane_size[0],j*self.pane_size[1]) for i in range(grid[0]) for j in range(grid[1])]
 
-		self.sprite_tracker = FaceSpriteTracker(max_sprites=len(self.grid_coords),tolerance=(70,70),maxwait=2,replace_policy=FaceSpriteTracker.RANDOM,fill=True)
+		self.sprite_tracker = FaceSpriteTracker(max_sprites=len(self.grid_coords),tolerance=self.pane_size,maxwait=5,replace_policy=FaceSpriteTracker.RANDOM,fill=True)
 
 	def draw(self,screen) :
 
@@ -51,5 +51,5 @@ class FacePanes(AetherModule) :
 if __name__ == "__main__" :
 	face_input = FaceInputProvider(0,(640,480),"/home/labadorf/development/aether/examples/haarcascade_frontalface_alt.xml",flip=True)
 	driver = AetherDriver(640,input=face_input)
-	driver.register_module(FacePanes(driver,grid=(10,6)))
+	driver.register_module(FaceTiler(driver,grid=(5,3)))
 	driver.run()

@@ -11,7 +11,7 @@ class FaceSpriteTracker :
 
 		if fill :
 			self.sprites = [FaceSprite() for i in range(max_sprites)]
-			self._sprite_ages = [maxwait]*max_sprites
+			self._sprite_ages = [0]*max_sprites
 		else :
 			self.sprites = []
 			self._sprite_ages = []
@@ -23,7 +23,7 @@ class FaceSpriteTracker :
 	def get_sprite(self,rect) :
 		for i,s in enumerate(self.sprites) :
 			if self._sprite_ages[i] != 0 and \
-				all([abs(s.face_pos[0]-rect.x) < self.tolerance[0],abs(s.face_pos[1]-rect.y) < self.tolerance[1]]) :
+				all([abs(s.face_rect.x-rect.x) < self.tolerance[0],abs(s.face_rect.y-rect.y) < self.tolerance[1]]) :
 				return s
 		return None
 
@@ -54,7 +54,8 @@ class FaceSpriteTracker :
 							self._sprite_ages.reverse()
 						else :
 							self._sprite_ages.index(0) # just to make sure 0 is in the list
-							to_replace = randrange(0,self._sprite_ages.count(0))
+							to_replace_lst = [i for i,x in enumerate(self._sprite_ages) if x == 0]
+							to_replace = to_replace_lst[randrange(len(to_replace_lst))]
 
 						#print 'Replacing %d of %d(%d)'%(to_replace,self._sprite_ages.count(0),len(self._sprite_ages))
 						# new sprite and reset the age
