@@ -5,12 +5,14 @@ def set_options(opt):
 	opt.sub_options('modules')
 	opt.sub_options('util')
 	opt.sub_options('error')
+	opt.sub_options('sprites')
 
 def configure(conf):
 	conf.sub_config('core')
 	conf.sub_config('modules')
 	conf.sub_config('util')
 	conf.sub_config('error')
+	conf.sub_config('sprites')
 
 def build(bld):
 
@@ -23,3 +25,4 @@ def build(bld):
 	bld.add_subdirs('modules')
 	bld.add_subdirs('util')
 	bld.add_subdirs('error')
+	bld.add_subdirs('sprites')

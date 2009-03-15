@@ -1,5 +1,6 @@
 
 from aether.core import AetherDriver, FaceInputProvider, AetherModule
+from aether.sprites import FaceSprite, FaceSpriteTracker
 
 import pygame.image, pygame.font, pygame.sprite
 from pygame.color import THECOLORS
@@ -48,112 +49,6 @@ class PictureFrames(AetherModule) :
 			num = self.font.render(str(i),False,THECOLORS['red'])
 			screen.blit(num,self.frame_coords[i])
 
-
-class FaceSpriteTracker :
-
-	def __init__(self,max_sprites=10,tolerance=(10,10),maxwait=10) :
-		self.sprites = []
-		self._sprite_ages = []
-		self.max_sprites = max_sprites
-		self.tolerance = tolerance
-		self.maxwait = maxwait
-
-	def get_sprite(self,rect) :
-		for i,s in enumerate(self.sprites) :
-			if self._sprite_ages[i] != 0 and \
-				all([abs(s.face_pos[0]-rect.x) < self.tolerance[0],abs(s.face_pos[1]-rect.y) < self.tolerance[1]]) :
-				return s
-		return None
-
-	def update(self,rects,image) :
-		# look through each rect passed
-		for r in rects :
-			# try to locate the sprite that is likely to be associated with the rect
-			sprite = self.get_sprite(r)
-
-			# None means we didn't find a sprite close enough
-			if sprite is None :
-
-				# if our list of sprites hasn't reached its capacity yet, append a new one
-				if len(self.sprites) < self.max_sprites :
-					self.sprites.append(FaceSprite(r,image))
-					self._sprite_ages.append(self.maxwait)
-
-				# if we have reached capacity, replace the first dead sprite with this one
-				else :
-
-					# list.index(value) throws an error if it doesn't contain the value you're looking for
-					try :
-						to_replace = self._sprite_ages.index(0)
-
-						# new sprite and reset the age
-						self.sprites[to_replace] = FaceSprite(r,image)
-						self._sprite_ages[to_replace] = self.maxwait
-					except ValueError :
-						pass
-
-			# we found a sprite, reset its age and update it
-			else :
-				sprite_id = self.sprites.index(sprite)
-				self._sprite_ages[sprite_id] = self.maxwait
-				sprite.update(r,image)
-
-		# age all the sprites
-		self._sprite_ages = [max(0,x-1) for x in self._sprite_ages]
-
-
-class FaceSprite(pygame.sprite.Sprite) :
-
-	def __init__(self,rect,lag=10,frame=None) :
-		pygame.sprite.Sprite.__init__(self)
-
-		self.rect = rect
-		self.rect.topleft = rect.x,rect.y
-		self.face_pos = self.rect.topleft
-
-		self.lag = lag
-		self.history = [rect]
-
-		if frame is None :
-			self.image = pygame.Surface((1,1))
-		else :
-			self.update(rect,frame)
-
-	def update(self,rect,frame) :
-
-
-		# calculate running average
-		if len(self.history) > self.lag :
-			self.history.pop(0)
-		self.history.append(rect)
-		width = sum([x.width for x in self.history])/len(self.history)
-		height = sum([x.height for x in self.history])/len(self.history)
-
-		# if change in dimensions is less than some threshold, don't change the dims
-		#TODO deltas may eventually be settings, but they work pretty well for this use case
-		delta = 3
-		last_rect = self.history[-2]
-		if all([abs(last_rect.width-width) < delta, abs(last_rect.height - rect.height)]) :
-			rect.size = last_rect.size
-
-		# if change in position is less than some threshold, don't move the box
-		delta = 5
-		if all([abs(last_rect.x-rect.x) < delta,abs(last_rect.y-rect.y)]) :
-			rect.topleft = last_rect.topleft
-
-		# record the face position before we add a margin to the rect
-		self.face_pos = rect.topleft
-
-		# add a margin around the rect so we get more of the face
-		# TODO these might be settings eventually too
-		top,bottom,left,right = 50,26,26,26
-		m_x = max(0,rect.x-left)
-		m_y = max(0,rect.y-top)
-		m_w = min(frame.get_rect().width-m_x,width+left+right)
-		m_h = min(frame.get_rect().height-m_y,height+top+bottom)
-		self.rect = pygame.Rect(m_x,m_y,m_w,m_h)
-
-		self.image = frame.subsurface(self.rect)
 
 
 if __name__ == "__main__" :
