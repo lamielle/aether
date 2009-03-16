@@ -1,7 +1,8 @@
 from __future__ import with_statement
 import os,yaml
+from aether.core import AetherObject
 
-class AetherSettings(object):
+class AetherSettings(AetherObject):
 	#Dummy class for storing settings section values
 	class values(object): pass
 
@@ -13,6 +14,9 @@ class AetherSettings(object):
 	_non_settings_fields=('loaded','saved')
 
 	def __init__(self,settings_dict):
+		#First set the class member AetherObject.settings to this AetherSettings object
+		AetherObject.settings=self
+
 		#Initially we set loaded/saved to successful
 		self.loaded=True
 		self.saved=True
@@ -54,7 +58,7 @@ class AetherSettings(object):
 		#Load the settings file if one is specified and and if it exists
 		#Relys on short-circuited 'and' operator as isfile dies if None is passed as its argument
 		if None!=self.aether.settings_file and os.path.isfile(self.aether.settings_file):
-			if self.aether.debug: print "Loading settings from file '%s'..."%(self.aether.settings_file)
+			self.debug_print("Loading settings from file '%s'..."%(self.aether.settings_file))
 
 			#Attempt to load the Aether YAML settings file aether.settings_file
 			try:
@@ -89,11 +93,11 @@ class AetherSettings(object):
 	def load_from_dict(self,settings_dict):
 		try:
 			for section,values in settings_dict.items():
-				if self.aether.debug: print "Found Section '%s':"%(section)
+				self.debug_print("Found Section '%s':"%(section))
 				try:
 					for name,value in values.items():
 						setattr(getattr(self,section),name,value)
-						if self.aether.debug: print "|-Found value: %s: %s (%s)"%(name,repr(value),type(value))
+						self.debug_print("|-Found value: %s: %s (%s)"%(name,repr(value),type(value)))
 				except AttributeError,e:
 					print "Error: Incorrect settings dictionary format: All sections must map to a Python dictionary (Exception: %s)."%(e)
 					self.loaded=False
@@ -106,7 +110,7 @@ class AetherSettings(object):
 		#Assume success in saving from the start
 		self.saved=True
 
-		if self.aether.debug: print "Writing settings to file '%s'..."%(self.aether.settings_file)
+		self.debug_print("Writing settings to file '%s'..."%(self.aether.settings_file))
 
 		try:
 			#Get a dictionary containing the current settings
@@ -116,8 +120,8 @@ class AetherSettings(object):
 			with file(self.aether.settings_file,'w') as f:
 				yaml.dump(settings,f,default_flow_style=False)
 
-			if self.aether.debug: print "Wrote settings to file '%s'..."%(self.aether.settings_file)
-			if self.aether.debug: print yaml.dump(settings,default_flow_style=False)
+			self.debug_print("Wrote settings to file '%s'..."%(self.aether.settings_file))
+			self.debug_print(yaml.dump(settings,default_flow_style=False))
 		except IOError,e:
 			print "Error: Unable to open Aether YAML settings file '%s' for writing (Exception: %s)"%(self.aether.settings_file,e)
 			self.saved=False
