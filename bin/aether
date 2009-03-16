@@ -11,13 +11,13 @@ def run_aether():
 #Returns the cli settings dictionary optparse.parse_args()[0]
 def parse_cli_settings():
 	from optparse import OptionParser
-	from aether.core import Settings
+	from aether.core import AetherSettings
 
 	#Create the option parser object
 	parser=OptionParser(usage='%prog [settings]',version='0.1')
 
-	#Settings file
-	parser.add_option('-s','--settings-file',action='store',dest='settings_file',default=Settings.settings_file_default,metavar='FILE',
+	#AetherSettings file
+	parser.add_option('-s','--settings-file',action='store',dest='settings_file',default=AetherSettings.settings_file_default,metavar='FILE',
 	                  help='file to load settings from (default: \'%default\').')
 
 	#Additional module directories
@@ -33,7 +33,7 @@ def parse_cli_settings():
 	                  help='name of a module to run (may be specified multiple times)')
 
 	#Debug
-	parser.add_option('-d','--debug',action='store_true',dest='debug',default=Settings.debug_default,
+	parser.add_option('-d','--debug',action='store_true',dest='debug',default=AetherSettings.debug_default,
 	                  help='enable debug mode')
 
 	#Parse the specified arguments and return the result
@@ -42,7 +42,7 @@ def parse_cli_settings():
 #Create a settings object and load them from a file.
 def load_settings(cli_settings):
 	import sys,aether
-	settings=aether.core.Settings({'aether':vars(cli_settings)})
+	settings=aether.core.AetherSettings({'aether':vars(cli_settings)})
 	if settings.loaded:
 		if settings.aether.debug: print 'Loaded settings:'
 		if settings.aether.debug: print settings

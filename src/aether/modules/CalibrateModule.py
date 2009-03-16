@@ -39,8 +39,8 @@ class RingBuffer(object):
 	def clear(self):
 		for i in xrange(4): self.push(None)
 
-#Settings class for storing the current value of settings
-class Settings(object):
+#AetherSettings class for storing the current value of settings
+class AetherSettings(object):
 	__slots__=('brightness','contrast','threshold','points','brightness_enable','contrast_enable','threshold_enable','points_enable','reference')
 
 	def __init__(self):
@@ -69,8 +69,8 @@ class CalibrateModule(AetherModule):
 		self.renderer.color=(234,228,223)
 
 		#Create the settings window
-		self.settings=Settings()
-		self.settings_window=self.get_settings_window('Settings',(self.diffp.get_capture_size()[0]/2+60,self.diffp.get_capture_size()[1]+25),self.settings)
+		self.settings=AetherSettings()
+		self.settings_window=self.get_settings_window('AetherSettings',(self.diffp.get_capture_size()[0]/2+60,self.diffp.get_capture_size()[1]+25),self.settings)
 		self.renderer.add_widget(self.settings_window)
 
 		#Create the raw camera feed window

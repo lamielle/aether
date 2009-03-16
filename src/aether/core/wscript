@@ -12,7 +12,7 @@ def build(bld):
 	inst_dir='aether'+os.sep+'core'
 
 	install_files('PREFIX',inst_dir,'__init__.py')
-	install_files('PREFIX',inst_dir,'Settings.py')
+	install_files('PREFIX',inst_dir,'AetherSettings.py')
 	install_files('PREFIX',inst_dir,'AetherDriver.py')
 	install_files('PREFIX',inst_dir,'AetherModule.py')
 	install_files('PREFIX',inst_dir,'AetherParamModule.py')

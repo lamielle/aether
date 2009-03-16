@@ -1,5 +1,5 @@
 from aether.core import AetherModule
-from aether.core import Settings
+from aether.core import AetherSettings
 import pygame
 from pygame.locals import *
 
@@ -12,8 +12,8 @@ class AetherParamModule(AetherModule) :
     self.show_params = False
 
     #These need to be updated as they were moved from the top
-    from ocempgui.widgets import *
-    from ocempgui.widgets.Constants import *
+    from ocempgui.widgets import Window,Button
+    from ocempgui.widgets.Constants import SIG_CLICKED
 
     # parameter window stuff
     self.offscreen = pygame.Surface(self.dims)

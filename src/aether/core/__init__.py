@@ -2,8 +2,8 @@
 """
 __doc__ = """Some documentation, per se"""
 
-#Settings imports
-from Settings import Settings
+#AetherSettings imports
+from AetherSettings import AetherSettings
 
 #Module related imports
 from AetherModule import AetherModule

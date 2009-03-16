@@ -1,4 +1,4 @@
-from aether.core import Settings
+from aether.core import AetherSettings
 from pygame import mouse
 from math import cos,sin,pi
 import os
@@ -24,7 +24,7 @@ class InputProvider(object):
 
 		self.dims = dims
 		self.settings_file_name=settings_file_name
-		self.settings=Settings()
+		self.settings=AetherSettings()
 		if os.path.isfile(self.settings_file_name):
 			self.settings.load(self.settings_file_name)
 		if not debug: self.calibrate()

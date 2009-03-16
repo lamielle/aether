@@ -1,7 +1,7 @@
 from __future__ import with_statement
 import os,yaml
 
-class Settings(object):
+class AetherSettings(object):
 	#Dummy class for storing settings section values
 	class values(object): pass
 
@@ -31,9 +31,9 @@ class Settings(object):
 
 	def __getattr__(self,item):
 		#Check if this item already exists
-		if item not in Settings._non_settings_fields and not self.__dict__.has_key(item):
-			#Create an empty values object if it is not in the Settings._non_settings_fields collection if it does not exist
-			self.__dict__[item]=Settings.values()
+		if item not in AetherSettings._non_settings_fields and not self.__dict__.has_key(item):
+			#Create an empty values object if it is not in the AetherSettings._non_settings_fields collection if it does not exist
+			self.__dict__[item]=AetherSettings.values()
 
 		#Now do the default operation
 		return object.__getattribute__(self,item)
@@ -73,8 +73,8 @@ class Settings(object):
 
 	#Set aether.{settings_file,debug} to default values
 	def load_defaults(self):
-		self.aether.settings_file=Settings.settings_file_default
-		self.aether.debug=Settings.debug_default
+		self.aether.settings_file=AetherSettings.settings_file_default
+		self.aether.debug=AetherSettings.debug_default
 
 	#Attempts to load the aether.debug setting value
 	#This was added to make sure debugging is setup before any other code that may need it is run
@@ -101,7 +101,7 @@ class Settings(object):
 			print "Error: The given settings_dict object is not a dictionary (Exception: %s)."%(e)
 			self.loaded=False
 
-	#Save the current settings in this Settings object to the file specified in aether.settings_file
+	#Save the current settings in this AetherSettings object to the file specified in aether.settings_file
 	def save(self):
 		#Assume success in saving from the start
 		self.saved=True
@@ -125,12 +125,12 @@ class Settings(object):
 			print "Error: Cannot save to Aether YAML settings file '%s' (Exception: %s)."%(self.aether.settings_file,e)
 			self.saved=False
 
-	#Create a settings dictionary from the fields of this Settings object
+	#Create a settings dictionary from the fields of this AetherSettings object
 	def get_settings_dict(self):
 		settings={}
 		for section,values in self.__dict__.items():
-			#Fields named in Settings._non_settings_fields should not be treated as settings values
-			if section not in Settings._non_settings_fields:
+			#Fields named in AetherSettings._non_settings_fields should not be treated as settings values
+			if section not in AetherSettings._non_settings_fields:
 				settings[section]={}
 				for name,value in values.__dict__.items():
 					settings[section][name]=value
