@@ -1,10 +1,55 @@
 #!/usr/bin/env python
 
-import aether
+def run_aether():
+	#Parse command line settings
+	cli_settings=parse_cli_settings()
 
-settings=aether.core.Settings('.settings')
-if settings.loaded:
-	print 'Loaded settings:'
-	print settings
-else:
-	print 'Loading settings failed!'
+	#Load settings from a file
+	settings=load_settings(cli_settings)
+
+#Parse command line settings
+#Returns the cli settings dictionary optparse.parse_args()[0]
+def parse_cli_settings():
+	from optparse import OptionParser
+	from aether.core import Settings
+
+	#Create the option parser object
+	parser=OptionParser(usage='%prog [settings]',version='0.1')
+
+	#Settings file
+	parser.add_option('-s','--settings-file',action='store',dest='settings_file',default=Settings.settings_file_default,metavar='FILE',
+	                  help='file to load settings from (default: \'%default\').')
+
+	#Additional module directories
+	parser.add_option('--moddir',action='append',dest='mod_dirs',default=[],metavar='DIR',
+	                  help='additional module directory to search (may be specified multiple times)')
+
+	#Additional data directories
+	parser.add_option('--datadir',action='append',dest='data_dirs',default=[],metavar='DIR',
+	                  help='additional data directory to search (may be specified multiple times)')
+
+	#Module specification
+	parser.add_option('-m','--module',action='append',dest='modules',default=[],metavar='MODULE',
+	                  help='name of a module to run (may be specified multiple times)')
+
+	#Debug
+	parser.add_option('-d','--debug',action='store_true',dest='debug',default=Settings.debug_default,
+	                  help='enable debug mode')
+
+	#Parse the specified arguments and return the result
+	return parser.parse_args()[0]
+
+#Create a settings object and load them from a file.
+def load_settings(cli_settings):
+	import sys,aether
+	settings=aether.core.Settings({'aether':vars(cli_settings)})
+	if settings.loaded:
+		if settings.aether.debug: print 'Loaded settings:'
+		if settings.aether.debug: print settings
+	else:
+		print 'Loading settings failed!  Exiting...'
+		sys.exit(1)
+	return settings
+
+if '__main__'==__name__:
+	run_aether()
