@@ -10,7 +10,8 @@ try:
 except:
     pass
 #---INITIALISATIONS---
-pygame.init()
+#2009-3-15: AML: Commented this out as it shouldn't init pygame until we are ready
+#pygame.init()
 #---ANTI-ALIASED CIRCLE---
 def aacircle(Surface,color,pos,radius,antialiaslevel,width=0):
     surfacesize = (radius*2)+(2*antialiaslevel)
