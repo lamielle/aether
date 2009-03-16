@@ -2,6 +2,9 @@
 """
 __doc__ = """Some documentation, per se"""
 
+#AetherObject imports
+from AetherObject import AetherObject
+
 #AetherSettings imports
 from AetherSettings import AetherSettings
 
