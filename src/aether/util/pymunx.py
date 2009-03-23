@@ -186,6 +186,7 @@ class pymunx:
     # Space Init
     self.space = pm.Space()
     self.space.gravity = Vec2d(gravity)
+    self.space._space.contents.elasticIterations = 10
     self.space.resize_static_hash()
     self.space.resize_active_hash()
 

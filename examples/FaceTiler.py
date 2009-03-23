@@ -49,7 +49,7 @@ class FaceTiler(AetherModule) :
 
 
 if __name__ == "__main__" :
-	face_input = FaceInputProvider(0,(640,480),"/home/labadorf/development/aether/examples/haarcascade_frontalface_alt.xml",flip=True)
+	face_input = FaceInputProvider(0,(640,480),"/home/labadorf/development/aether-adam/examples/haarcascade_frontalface_alt.xml",flip=True)
 	driver = AetherDriver(640,input=face_input)
 	driver.register_module(FaceTiler(driver,grid=(5,3)))
 	driver.run()
