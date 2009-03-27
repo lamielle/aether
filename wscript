@@ -9,6 +9,7 @@ def set_options(opt):
 
 	opt.sub_options('src')
 	opt.sub_options('bin')
+	opt.sub_options('data')
 
 def configure(conf):
 	#Configure python
@@ -18,7 +19,8 @@ def configure(conf):
 
 	conf.sub_config('src')
 	conf.sub_config('bin')
+	conf.sub_config('data')
 
 def build(bld):
 	bld.add_subdirs('src')
-	bld.add_subdirs('bin')
+	bld.add_subdirs('data')

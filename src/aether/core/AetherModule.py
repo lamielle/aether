@@ -1,13 +1,9 @@
-# 'abstract' class that all other modules should 'implement'
-class AetherModule :
+from aether.core import AetherObject
+
+# 'abstract' class that all other modules should inherit from
+class AetherModule(AetherObject):
 	""" Base Aether module class
 	"""
-
-	def __init__(self, driver, **kwargs) :
-		"""Initialzie method, should always be called by subclasses"""
-		self.driver = driver
-		self.dims = driver.dims
-		self.input = driver.input
 
 	def get_verts(self) :
 		return self.driver.get_verts()

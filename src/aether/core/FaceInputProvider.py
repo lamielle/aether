@@ -10,17 +10,13 @@ import pygame.transform
 
 class FaceInputProvider(CameraInputProvider):
 
-	def __init__(self,cam_num,capture_dims,cascade_file,flip=False):
+	def __init__(self):
 		#Call CameraInputProvider constructor
-		CameraInputProvider.__init__(self,cam_num,capture_dims)
+		CameraInputProvider.__init__(self)
 
 		#Load the cascade classifier data
-		self.cascade=cv.cvLoadHaarClassifierCascade(cascade_file,cv.cvSize(40,40))
+		self.cascade=cv.cvLoadHaarClassifierCascade(self.get_file_path('haarcascade_frontalface_alt.xml'),cv.cvSize(40,40))
 
-		self.flip=flip
-
-
-		self.image_dims=tuple((int(dim) for dim in self.capture_dims))
 		self.storage = cv.cvCreateMemStorage(0)
 		cv.cvClearMemStorage(self.storage)
 
@@ -36,7 +32,7 @@ class FaceInputProvider(CameraInputProvider):
 
 	def _get_cv_frame(self):
 		frame=CameraInputProvider.get_frame(self)
-		if self.flip :
+		if self.settings.FaceInputProvider.flip:
 			cv.cvFlip(frame,None,1)
 		return frame
 
@@ -52,7 +48,7 @@ class FaceInputProvider(CameraInputProvider):
 	def _cv_to_pygame(self,frame) :
 
 		# scale the image to size of the window
-		cvt_scale = cv.cvCreateImage(cv.cvSize(self.image_dims[0],self.image_dims[1]),frame.depth,frame.nChannels)
+		cvt_scale = cv.cvCreateImage(cv.cvSize(self.capture_dims[0],self.capture_dims[1]),frame.depth,frame.nChannels)
 		cv.cvResize(frame,cvt_scale,cv.CV_INTER_LINEAR)
 
 		# need to convert the colorspace differently depending on where the image came from
@@ -65,7 +61,7 @@ class FaceInputProvider(CameraInputProvider):
 			cv.cvCvtColor(cvt_scale,cvt_color,cv.CV_GRAY2RGB)
 
 		# create a pygame surface
-		frame_surface=pygame.image.frombuffer(cvt_color.imageData,self.image_dims,'RGB')
+		frame_surface=pygame.image.frombuffer(cvt_color.imageData,self.capture_dims,'RGB')
 
 		return frame_surface
 

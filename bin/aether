@@ -1,11 +1,16 @@
 #!/usr/bin/env python
 
 def run_aether():
+	from aether.core import AetherDriver
+
 	#Parse command line settings
 	cli_settings=parse_cli_settings()
 
 	#Load settings from a file
 	settings=load_settings(cli_settings)
+
+	#Create an AetherDriver and start running
+	AetherDriver().run()
 
 #Parse command line settings
 #Returns the cli settings dictionary optparse.parse_args()[0]

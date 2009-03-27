@@ -5,43 +5,80 @@ from pygame.image import tostring
 import pygame.mouse
 import Image
 import aether,aether.core,aether.modules
-from aether.core import InputProvider
+from aether.core import AetherObject,InputProvider
+from aether.error import AetherModuleLoadError
 
-class AetherDriver :
-	"""The driver class for the Interactive Light Display system.	This class controls the pygame event loop that drives each of its component AetherModules.	Example usage::
-
-		driver = AetherDriver(640,DiffProviderSimulator())
-		driver.register_module(TestAetherModule(driver,THECOLORS["blue"]))
-		driver.register_module(PymunkModule(driver))
-		driver.register_module(TestAetherModule(driver,THECOLORS["white"]))
-		driver.run()
-
-The above instantiates an AetherDriver object with screen width of 640 pixels and a DiffProviderSimulator that does not require a connected camera.	If a camera is attached and all the necessary supporting software is available the DiffProvider object will fetch images and translate them into something potentially useful.	See DiffProvider and AetherCalibrationModule documentation for more details.
-
-See the appropriate documentation for TestAetherModule and PymunkModule modules.
+class AetherDriver(AetherObject):
+	"""The driver class for Aether. This class contains the pygame event loop that drives each Aether module.
 	"""
 
-	def __init__(self,height,modules=[],debug=False,input=None) :
+	def __init__(self):
+		self.modules=[]
+		self.dims=(self.settings.aether.width,self.settings.aether.height)
+
+		#Initialize pygame
 		pygame.init()
-		self.dims = (height,int(height*.75))
-		self.screen = pygame.display.set_mode(self.dims)
-		self.modules = modules
-		if input is None :
-			self.input=InputProvider(dims=self.dims,settings_file_name='settings.cfg',debug=debug)
-		else :
-			self.input = input
-		self.debug = debug
 
-	def register_module(self,module) :
-		"""wtf mate?
-		"""
+		#Setup the screen
+		self.screen=pygame.display.set_mode(self.dims)
 
+	#Loads default settings values
+	def load_defaults(self):
+		self.debug_print('Setting up some default settings values...')
+		self.settings.aether.mod_dirs=[aether.base_dir+os.sep+'modules']+self.settings.aether.mod_dirs
+		self.settings.aether.data_dirs=[aether.base_dir+os.sep+'data']+self.settings.aether.data_dirs
+
+	#Attempts to load, create, and register each module that is specified in the settings
+	def load_modules(self):
+		#Update sys.path with the module directories specified in aether.mod_dirs
+		self.update_path()
+
+		#Try to import each module specified in the settings
+		for mod_name in self.settings.aether.modules:
+			try:
+				exec('from %s import %s'%(mod_name,mod_name))
+				self.debug_print("Imported module '%s'..."%(mod_name))
+
+				#Create an instance of the module and register it
+				try:
+					exec('module=%s()'%(mod_name))
+					self.register_module(module)
+				except Exception,e:
+					raise AetherModuleLoadError("Error while instantiating module '%s'..."(mod_name),e)
+			except ImportError,e:
+				raise AetherModuleLoadError("Could not import module '%s'..."%(mod_name),e)
+			except Exception,e:
+				raise AetherModuleLoadError("Error while importing module '%s': %s"%(mod_name,e),e)
+
+	#Reigsters a module with Aether
+	def register_module(self,module):
+		self.debug_print("Registering module '%s'..."%(module.__module__))
 		self.modules.append(module)
 
-	def run(self) :
+	#Sets up input sources
+	def setup_input(self):
+		#This is hard-coded now to use FaceInputProvider for input
+		#This will be changed in the future
+		from aether.core import FaceInputProvider
+		face_input=FaceInputProvider()
 
-		if len(self.modules) == 0 :
-			raise Exception('AetherDriver must have at least one module registered.')
+		#Set the 'input' and 'dims' fields on all loded modules
+		for module in self.modules:
+			module.input=face_input
+			module.dims=self.dims
+
+	def run(self):
+		#Load default settings for Aether
+		self.load_defaults()
+
+		#Attempt to load the modules specified in settings
+		self.load_modules()
+
+		if 0==len(self.modules):
+			raise AetherModuleLoadError('Aether must have at least one module registered to run.')
+
+		#Setup the inputs for the modules
+		self.setup_input()
 
 		clock = pygame.time.Clock()
 		running = True

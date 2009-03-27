@@ -10,15 +10,15 @@ from aether.error import AetherCameraError
 
 class CameraInputProvider(InputProvider):
 
-	def __init__(self,cam_num,capture_dims):
+	def __init__(self):
 		"""Inititalize the camera associated with the given number.  Image captures will be of the given dimensions."""
 
 		#Set the dimensions that we should be capturing in
-		self.capture_dims=capture_dims
-		self.cv_capture_dims=cv.cvSize(capture_dims[0],capture_dims[1])
+		self.capture_dims=(self.settings.CameraInputProvider.capture_width,self.settings.CameraInputProvider.capture_height)
+		self.cv_capture_dims=cv.cvSize(self.capture_dims[0],self.capture_dims[1])
 
 		#Initialize the camera
-		self._init_camera(cam_num)
+		self._init_camera(self.settings.CameraInputProvider.cam_num)
 
 	def _init_camera(self,cam_num):
 

@@ -1,14 +1,14 @@
-from aether.core import AetherSettings
+from aether.core import AetherObject
 from pygame import mouse
 from math import cos,sin,pi
 import os
 
-class InputProvider(object):
+class InputProvider(AetherObject):
 
 	# used for debug mode
 	CIRCLE, PERSON, POLY = range(3)
 
-	def __init__(self,dims,settings_file_name,debug=False):
+	def __init__(self):
 		"""Init method"""
 		if debug:
 			InputProvider.com=self.get_com_debug
@@ -21,13 +21,6 @@ class InputProvider(object):
 			InputProvider.verts=self.get_verts
 			InputProvider.polys=self.get_polys
 			InputProvider.calibrate=self.calibrate
-
-		self.dims = dims
-		self.settings_file_name=settings_file_name
-		self.settings=AetherSettings()
-		if os.path.isfile(self.settings_file_name):
-			self.settings.load(self.settings_file_name)
-		if not debug: self.calibrate()
 
 	#Camera input methods
 	def get_curr_frame(self) :

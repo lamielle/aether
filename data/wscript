@@ -1,0 +1,14 @@
+def set_options(opt): pass
+
+def configure(conf): pass
+
+def build(bld):
+	import os
+
+	inst_dir='aether'+os.sep+'data'
+
+	install_files('PREFIX',inst_dir,'frames.png')
+	install_files('PREFIX',inst_dir,'frames.svg')
+	install_files('PREFIX',inst_dir,'haarcascade_frontalface_alt.xml')
+	install_files('PREFIX',inst_dir,'tiki.png')
+	install_files('PREFIX',inst_dir,'tiki.svg')

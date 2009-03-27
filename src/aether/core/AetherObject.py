@@ -1,4 +1,4 @@
-import os
+import os,sys
 from aether.error import AetherIOError
 
 class AetherObject(object):
@@ -30,3 +30,10 @@ class AetherObject(object):
 				return full_path
 
 		raise AetherIOError("Error: The file '%s' was not found in any of the directories specified in settings value aether.data_dirs (%s)"%(filename,self.settings.aether.data_dirs))
+
+		#Helper method for updating the module path (sys.path)
+		#This method appends each module directory in aether.mod_dirs to sys.path
+	def update_path(self):
+		for mod_dir in self.settings.aether.mod_dirs:
+			self.debug_print("Appending module directory '%s' to sys.path..."%(mod_dir))
+			sys.path.append(mod_dir)
