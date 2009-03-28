@@ -4,7 +4,7 @@ from pygame.color import *
 from pygame.image import tostring
 import pygame.mouse
 import Image
-import aether,aether.core,aether.modules
+import aether,aether.core
 from aether.core import AetherObject,InputProvider
 from aether.error import AetherModuleLoadError
 
@@ -74,6 +74,7 @@ class AetherDriver(AetherObject):
 		#Attempt to load the modules specified in settings
 		self.load_modules()
 
+		#Make sure we have one or more modules ready to run
 		if 0==len(self.modules):
 			raise AetherModuleLoadError('Aether must have at least one module registered to run.')
 
