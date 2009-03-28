@@ -23,4 +23,5 @@ def configure(conf):
 
 def build(bld):
 	bld.add_subdirs('src')
+	bld.add_subdirs('bin')
 	bld.add_subdirs('data')
