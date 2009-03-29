@@ -12,8 +12,8 @@ from AetherSettings import AetherSettings
 from AetherModule import AetherModule
 from AetherParamModule import AetherParamModule
 
-#Input provider related imports
-from AetherInputProvider import AetherInputProvider
+#Transform related imports
+from AetherTransform import AetherTransform
 
 #Note: this is placed last as it causes problems if it is before the module related imports
 from AetherDriver import AetherDriver

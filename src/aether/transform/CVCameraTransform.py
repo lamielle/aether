@@ -1,5 +1,5 @@
 '''
-Input provider that reads frames from a camera device using OpenCV.  This is a class that encapsulates the details of OpenCV camera capture.
+Transform that reads frames from a camera device using OpenCV.  This is a class that encapsulates the details of OpenCV camera capture.
 
 read() result: cvMat
 
@@ -7,10 +7,10 @@ read() result: cvMat
 '''
 
 from opencv import cv,highgui
-from aether.core import AetherInputProvider
+from aether.core import AetherTransform
 from aether.error import AetherCameraError
 
-class CVCameraInputProvider(AetherInputProvider):
+class CVCameraTransform(AetherTransform):
 
 	#Default settings values
 	defaults={'cam_num':0,'capture_dims':(640,480)}

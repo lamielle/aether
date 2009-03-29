@@ -10,11 +10,11 @@ import pygame
 class MirrorModule(AetherModule):
 
 	#Default dependences
-	deps=(('CameraInputProvider','face_cam'),)
+	deps=(('CameraTransform','face_cam'),)
 
 	#Main 'action' method: This is called once each iteration of the game loop
 	def draw(self,screen):
-		#Get the current frame from the camera input provider
+		#Get the current frame from the camera transform
 		curr_frame=self.face_cam.read()
 
 		#Scale the current frame to the screen size

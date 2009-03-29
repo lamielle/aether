@@ -1,18 +1,18 @@
 """
-This class provides input using the location of faces that are detected using Haar Cascade Face Detection.
+This transform input using the location of faces that are detected using Haar Cascade Face Detection.
 
 :Author Adam Labadorf and Alan LaMielle
 """
 
 from opencv import cv,highgui
-from aether.core import CameraInputProvider
+from aether.core import CameraTransform
 import pygame.transform
 
-class FaceInputProvider(CameraInputProvider):
+class FaceTransform(CameraTransform):
 
 	def __init__(self):
-		#Call CameraInputProvider constructor
-		CameraInputProvider.__init__(self)
+		#Call CameraTransform constructor
+		CameraTransform.__init__(self)
 
 		#Load the cascade classifier data
 		self.cascade=cv.cvLoadHaarClassifierCascade(self.file_path('haarcascade_frontalface_alt.xml'),cv.cvSize(40,40))
@@ -31,8 +31,8 @@ class FaceInputProvider(CameraInputProvider):
 				cv.cvReleaseMemStorage(self.storage)
 
 	def _get_cv_frame(self):
-		frame=CameraInputProvider.get_frame(self)
-		if self.settings.FaceInputProvider.flip:
+		frame=CameraTransform.get_frame(self)
+		if self.settings.FaceTransform.flip:
 			cv.cvFlip(frame,None,1)
 		return frame
 

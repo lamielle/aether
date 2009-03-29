@@ -1,5 +1,5 @@
 '''
-Input provider that reads frames from a camera device.
+Transform that reads frames from a camera device.
 
 read() result: a pygame surface with capturing dimensions
 
@@ -7,12 +7,12 @@ read() result: a pygame surface with capturing dimensions
 '''
 
 import pygame
-from aether.core import AetherInputProvider
+from aether.core import AetherTransform
 
-class CameraInputProvider(AetherInputProvider):
+class CameraTransform(AetherTransform):
 
 	#Default dependences
-	deps=(('FlipInputProvider','flip_cam'),)
+	deps=(('FlipTransform','flip_cam'),)
 
 	def read(self):
 		'''Capture the current frame from the camera and return it as a pyGame surface'''

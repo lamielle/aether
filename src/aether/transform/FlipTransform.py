@@ -1,5 +1,5 @@
 '''
-Input provider that reads frames from an OpenCV IP and flips the capture.
+Transform that reads frames from an OpenCV IP and flips the capture.
 
 read() result: a flipped cvMat
 
@@ -7,12 +7,12 @@ read() result: a flipped cvMat
 '''
 
 from opencv import cv
-from aether.core import AetherInputProvider
+from aether.core import AetherTransform
 
-class FlipInputProvider(AetherInputProvider):
+class FlipTransform(AetherTransform):
 
 	#Default dependences
-	deps=(('CVCameraInputProvider','camera'),)
+	deps=(('CVCameraTransform','camera'),)
 
 	def read(self):
 		'''Capture the current frame from the camera and flip it'''

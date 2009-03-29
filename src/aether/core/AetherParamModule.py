@@ -31,16 +31,16 @@ class AetherParamModule(AetherModule) :
     button.connect_signal(SIG_CLICKED,self.toggle_params)
 
     # add custom widgets
-    widgets = self.get_parameter_widgets() 
+    widgets = self.get_parameter_widgets()
 
     if driver.debug :
-      from aether.core import InputProvider
+      from aether.core import Transform
 
       def change_sim_shape(btn) :
         btn.set_active(True)
-        if self.person.active : shape = InputProvider.PERSON
-        elif self.poly.active : shape = InputProvider.POLY
-        else : shape = InputProvider.CIRCLE
+        if self.person.active : shape = Transform.PERSON
+        elif self.poly.active : shape = Transform.POLY
+        else : shape = Transform.CIRCLE
         driver.input.sim_shadow_shape = shape
 
       self.circle = RadioButton("Circle")

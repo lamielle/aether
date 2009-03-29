@@ -68,7 +68,7 @@ class AetherDriver(AetherObject):
 		self.debug_print("Registering module '%s'..."%(module.__module__))
 		self.modules.append(module)
 
-	#Creates the dependences for the given component (module or input provider)
+	#Creates the dependences for the given component (module or transform)
 	def create_deps(self,component):
 		#Create dependences recursively for the given component
 		try:
