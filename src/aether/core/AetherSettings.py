@@ -1,3 +1,9 @@
+'''
+Aether's settings class.  A single instance of this class exists in AetherObject and is used by all components in Aether to obtain settings values.
+
+:Author: Alan LaMielle
+'''
+
 from __future__ import with_statement
 import os,yaml
 from aether.core import AetherObject

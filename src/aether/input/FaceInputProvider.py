@@ -15,7 +15,7 @@ class FaceInputProvider(CameraInputProvider):
 		CameraInputProvider.__init__(self)
 
 		#Load the cascade classifier data
-		self.cascade=cv.cvLoadHaarClassifierCascade(self.get_file_path('haarcascade_frontalface_alt.xml'),cv.cvSize(40,40))
+		self.cascade=cv.cvLoadHaarClassifierCascade(self.file_path('haarcascade_frontalface_alt.xml'),cv.cvSize(40,40))
 
 		self.storage = cv.cvCreateMemStorage(0)
 		cv.cvClearMemStorage(self.storage)

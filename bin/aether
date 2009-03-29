@@ -25,13 +25,9 @@ def parse_cli_settings():
 	parser.add_option('-s','--settings-file',action='store',dest='settings_file',default=AetherSettings.settings_file_default,metavar='FILE',
 	                  help='file to load settings from (default: \'%default\').')
 
-	#Additional module directories
-	parser.add_option('--moddir',action='append',dest='mod_dirs',default=[],metavar='DIR',
-	                  help='additional module directory to search (may be specified multiple times)')
-
-	#Additional data directories
-	parser.add_option('--datadir',action='append',dest='data_dirs',default=[],metavar='DIR',
-	                  help='additional data directory to search (may be specified multiple times)')
+	#Additional search directories
+	parser.add_option('--dir',action='append',dest='dirs',default=[],metavar='DIR',
+	                  help='additional directory to search for components and data (may be specified multiple times)')
 
 	#Module specification
 	parser.add_option('-m','--module',action='append',dest='modules',default=[],metavar='MODULE',

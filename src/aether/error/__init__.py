@@ -2,4 +2,4 @@
 
 from AetherCameraError import AetherCameraError
 from AetherIOError import AetherIOError
-from AetherModuleLoadError import AetherModuleLoadError
+from AetherComponentLoadError import AetherComponentLoadError

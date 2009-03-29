@@ -1,26 +1,31 @@
-"""
-This is a class that encapsulates the details of OpenCV camera capture.  It should be treated as an abstract class and should only be used indirectly by a subclass.
+'''
+Input provider that reads frames from a camera device using OpenCV.  This is a class that encapsulates the details of OpenCV camera capture.
+
+read() result: cvMat
 
 :Author: Alan LaMielle
-"""
+'''
 
 from opencv import cv,highgui
-from aether.core import InputProvider
+from aether.core import AetherInputProvider
 from aether.error import AetherCameraError
 
-class CameraInputProvider(InputProvider):
+class CVCameraInputProvider(AetherInputProvider):
 
-	def __init__(self):
-		"""Inititalize the camera associated with the given number.  Image captures will be of the given dimensions."""
+	#Default settings values
+	defaults={'cam_num':0,'capture_dims':(640,480)}
+
+	def init(self):
+		'''Inititalize the camera associated with the camera number specified in the settings (cam_num).  Image captures will be of the dimensions specified in settings (capture_dims).'''
 
 		#Set the dimensions that we should be capturing in
-		self.capture_dims=(self.settings.CameraInputProvider.capture_width,self.settings.CameraInputProvider.capture_height)
 		self.cv_capture_dims=cv.cvSize(self.capture_dims[0],self.capture_dims[1])
 
 		#Initialize the camera
-		self._init_camera(self.settings.CameraInputProvider.cam_num)
+		self._init_camera(self.cam_num)
 
 	def _init_camera(self,cam_num):
+		'''Initializes the camera associated with the given camera number'''
 
 		#Create the OpenCV camera capture object
 		self._capture=highgui.cvCreateCameraCapture(cam_num)
@@ -43,17 +48,17 @@ class CameraInputProvider(InputProvider):
 		#Read the capture dims and see if they were set to what we specified
 		read_dims=(
 		           int(highgui.cvGetCaptureProperty(self._capture,highgui.CV_CAP_PROP_FRAME_WIDTH)),
-		           int(highgui.cvGetCaptureProperty(self._capture,highgui.CV_CAP_PROP_FRAME_HEIGHT))
-		          )
+		           int(highgui.cvGetCaptureProperty(self._capture,highgui.CV_CAP_PROP_FRAME_HEIGHT)))
 
 		#Set the scale flag depending on the results of setting the capture dimensions
+		#If we are reading frames in the correct dimensions, we don't need to scale
 		if self.capture_dims==read_dims:
 			self.scale=False
 		else:
 			self.scale=True
 
-	def get_frame(self):
-		"""Capture the current frame from OpenCV, returns a cvMat object"""
+	def read(self):
+		'''Capture the current frame from OpenCV, returns a cvMat object'''
 
 		#Capture the current frame
 		frame=highgui.cvQueryFrame(self._capture)

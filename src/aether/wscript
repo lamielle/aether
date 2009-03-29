@@ -3,6 +3,7 @@ import os
 def set_options(opt):
 	opt.sub_options('core')
 	opt.sub_options('modules')
+	opt.sub_options('input')
 	opt.sub_options('util')
 	opt.sub_options('error')
 	opt.sub_options('sprites')
@@ -10,6 +11,7 @@ def set_options(opt):
 def configure(conf):
 	conf.sub_config('core')
 	conf.sub_config('modules')
+	conf.sub_config('input')
 	conf.sub_config('util')
 	conf.sub_config('error')
 	conf.sub_config('sprites')
@@ -22,6 +24,7 @@ def build(bld):
 
 	bld.add_subdirs('core')
 	bld.add_subdirs('modules')
+	bld.add_subdirs('input')
 	bld.add_subdirs('util')
 	bld.add_subdirs('error')
 	bld.add_subdirs('sprites')
