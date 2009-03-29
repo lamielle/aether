@@ -69,7 +69,7 @@ class AetherObject(object):
 		self.debug_print('Updating sys.path with additional directories...')
 
 		#Get the full list of directories to add to sys.path
-		new_dirs=self.settings.aether.dirs+[aether.base_dir+os.sep+'modules',aether.base_dir+os.sep+'input']
+		new_dirs=self.settings.aether.dirs+[aether.base_dir+os.sep+'module',aether.base_dir+os.sep+'transform']
 
 		#Append each new_dir to sys.path
 		for new_dir in new_dirs:
