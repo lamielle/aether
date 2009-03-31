@@ -1,5 +1,5 @@
 '''
-Basic camera stream that provides a PyGame surface of a captured camera imagethat has been scaled to the dimensions of the Aether screen (aether.dims)
+Basic camera stream that provides a PyGame surface of a captured camera image that has been scaled to the dimensions of the Aether screen (aether.dims)
 '''
 
 from aether.core import AetherTransformChain
