@@ -10,6 +10,9 @@ class AetherObject(object):
 	#Global Aether settings
 	settings=None
 
+	#Additional default system directories to search
+	system_dirs=['data','module','chain','transform']
+
 	def __init__(self): pass
 
 	#Modified getattr:
@@ -30,6 +33,16 @@ class AetherObject(object):
 	def debug_print(self,output):
 		if self.settings.aether.debug: print output
 
+	#Helper method for obtaining the full list of search directories
+	def search_dirs(self):
+		#Start with the directories specified in settings
+		search_dirs=self.settings.aether.dirs
+
+		#Append system directories
+		search_dirs.extend([aether.base_dir+os.sep+name for name in self.system_dirs])
+
+		return search_dirs
+
 	#Helper method for obtaining the full path to a resource
 	#This method searches through all known data directory paths for the given file name
 	#If the file is found, the string for the full path to that file is returned
@@ -37,11 +50,8 @@ class AetherObject(object):
 	def file_path(self,filename):
 		self.debug_print("Searching data directories for file '%s'..."%(filename))
 
-		#Get the full collection of directories to search
-		search_dirs=self.settings.aether.dirs+[aether.base_dir+os.sep+'data']
-
 		#Search the directories
-		for search_dir in search_dirs:
+		for search_dir in self.search_dirs():
 			file_path=self._search_for_file(filename,search_dir)
 			if file_path is not None: break
 
@@ -64,14 +74,11 @@ class AetherObject(object):
 
 	#Helper method for updating the module path (sys.path)
 	#This method appends each directory in aether.dirs to sys.path
-	#Additionally, it adds aether.base_dir/{modules,input} to sys.path
+	#Additionally, it adds dirs named in AetherObject.system_dirs to sys.path
 	def update_path(self):
 		self.debug_print('Updating sys.path with additional directories...')
 
-		#Get the full list of directories to add to sys.path
-		new_dirs=self.settings.aether.dirs+[aether.base_dir+os.sep+'module',aether.base_dir+os.sep+'transform']
-
 		#Append each new_dir to sys.path
-		for new_dir in new_dirs:
+		for new_dir in self.search_dirs():
 			self.debug_print("Appending directory '%s' to sys.path..."%(new_dir))
 			sys.path.append(new_dir)

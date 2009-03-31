@@ -1,5 +1,5 @@
 '''
-Transform that reads frames from a camera device using OpenCV.  This is a class that encapsulates the details of OpenCV camera capture.
+Transform that reads frames from a camera device using OpenCV.  This is a transform that encapsulates the details of OpenCV camera capture.
 
 read() result: cvMat
 
@@ -10,10 +10,10 @@ from opencv import cv,highgui
 from aether.core import AetherTransform
 from aether.error import AetherCameraError
 
-class CVCameraTransform(AetherTransform):
+class CVCamera(AetherTransform):
 
-	#Default settings values
-	defaults={'cam_num':0,'capture_dims':(640,480)}
+	#Default values for settings this transform needs
+	defaults={'capture_dims':(640,480),'cam_num':0}
 
 	def init(self):
 		'''Inititalize the camera associated with the camera number specified in the settings (cam_num).  Image captures will be of the dimensions specified in settings (capture_dims).'''

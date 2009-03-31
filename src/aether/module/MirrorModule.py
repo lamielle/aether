@@ -9,13 +9,13 @@ import pygame
 
 class MirrorModule(AetherModule):
 
-	#Default dependences
-	deps=(('CameraTransform','face_cam'),)
+	#Chains this module needs
+	chains={'camera':'ScaledCameraChain'}
 
 	#Main 'action' method: This is called once each iteration of the game loop
 	def draw(self,screen):
 		#Get the current frame from the camera transform
-		curr_frame=self.face_cam.read()
+		curr_frame=self.camera.read()
 
 		#Scale the current frame to the screen size
 		scaled_curr_frame=pygame.transform.scale(curr_frame,self.dims)

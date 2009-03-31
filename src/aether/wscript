@@ -3,6 +3,7 @@ import os
 def set_options(opt):
 	opt.sub_options('core')
 	opt.sub_options('module')
+	opt.sub_options('chain')
 	opt.sub_options('transform')
 	opt.sub_options('util')
 	opt.sub_options('error')
@@ -11,6 +12,7 @@ def set_options(opt):
 def configure(conf):
 	conf.sub_config('core')
 	conf.sub_config('module')
+	conf.sub_config('chain')
 	conf.sub_config('transform')
 	conf.sub_config('util')
 	conf.sub_config('error')
@@ -24,6 +26,7 @@ def build(bld):
 
 	bld.add_subdirs('core')
 	bld.add_subdirs('module')
+	bld.add_subdirs('chain')
 	bld.add_subdirs('transform')
 	bld.add_subdirs('util')
 	bld.add_subdirs('error')

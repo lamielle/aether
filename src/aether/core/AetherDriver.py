@@ -13,77 +13,169 @@ class AetherDriver(AetherObject):
 	"""
 
 	def __init__(self):
-		self.modules=[]
+		#List of registered modules
+		self.registered_modules=[]
 
-	#Attempts to load, create, and register each module that is specified in the settings
+		#Dictionary mapping transform names to transform instances
+		self.registered_transforms={}
+
+	#Attempts to create an instance of the class of the given name
+	#This method involves two steps:
+	#1) Imports the given class from a module of the same name: from class_name import class_name
+	#2) Creates an instance of the imported class
+	#This class must not require any parameters in its constructor
+	#If any of these steps fails, an AetherComponentLoadError is raised
+	#On success the object that was created is returned
+	def create_instance(self,class_name):
+		try:
+			#Import the module (file) that the class is in
+			exec('from %s import %s'%(class_name,class_name))
+			self.debug_print("Imported class '%s'..."%(class_name))
+
+			try:
+				#Create an instance of the class
+				exec('instance=%s()'%(class_name))
+				self.debug_print("Created instance of class '%s'..."%(class_name))
+			except Exception,e:
+				raise AetherComponentLoadError("Error while instantiating class '%s'..."%(class_name),e)
+		except ImportError,e:
+			raise AetherComponentLoadError("Could not import class '%s'..."%(class_name),e)
+		except Exception,e:
+			raise AetherComponentLoadError("Error while importing class '%s': %s"%(class_name,e),e)
+
+		return instance
+
+	#Attempts to create and setup each module that is specified in the settings
 	def load_modules(self):
+		#Setup each module that should be run
+		for mod_class in self.modules:
+			#Create the module
+			module=self.create_instance(mod_class)
+
+			#Setup the module
+			self.setup_module(module)
+
+	#Sets up the given module:
+	#-Creates and sets up all chains the module needs
+	#-Registers the module
+	def setup_module(self,module):
+		#Define the 'name' of a module to be its class
+		module.name=module.__class__.__name__
+
+		#Create the chains the module depends on
+		try:
+			for chain_name,chain_class in module.chains.items():
+				#Create the chain
+				chain=self.create_instance(chain_class)
+
+				#Setup the chain
+				self.setup_chain(chain)
+
+				#Assign the chain the the proper field in the module
+				self.assign_chain(module,chain_name,chain)
+		except AttributeError,e:
+			#Problem while setting up chains
+			raise AetherComponentLoadError("Error while setting up chains for module '%s'..."%(module.name),e)
+		else:
+			#Setting up chains went fine (no exceptions raised), register the module
+			self.register_module(module)
+
+	#Sets up the given chain:
+	#-Creates instances of all transforms needed for the chain
+	#-Sets up each transform
+	def setup_chain(self,chain):
+		#Create each transform in the chain
+		for trans_name,trans_class in chain.transforms.items():
+			#Create the transform
+			transform=self.create_instance(trans_class)
+
+			#Setup the transform
+			self.setup_transform(transform,trans_name)
+
+			#Register the transform
+			self.register_transform(transform)
+
+		#Setup the dependences between the transforms in this chain
+		self.setup_transform_deps(chain.transform_deps)
+
+	#Sets up the given transform:
+	#-Sets the transform's name so it's specific settings may be accessed directly
+	def setup_transform(self,transform,trans_name):
+		#Set the transform's name
+		transform.name=trans_name
+
+		#Setup default settings for the transform
+		try:
+			defaults=transform.defaults
+		except AttributeError,e: pass
+		else:
+			#We found defaults, setup the settings now
+			#For each setting name/value
+			for name,value in defaults.items():
+				#Get the settings section for the transform
+				settings_section=getattr(AetherObject.settings,transform.name)
+
+				#Set the settings value in the appropriate section
+				setattr(settings_section,name,value)
+
+		#Get the init method of the transform's class
+		try:
+			init_method=transform.__class__.init
+		except AttributeError,e: pass
+		else:
+			#Call the init method since we found one
+			init_method(transform)
+
+	#Sets up the dependences between transforms
+	#The dependences should be given as a dictionary mapping
+	# transform names to a collection of transforms that the
+	# transform depends on
+	#Ex: {'transform_name':('depends_on_1','depends_on_2')}
+	def setup_transform_deps(self,deps):
+		#For each collection of dependences
+		for transform_name,transform_deps in deps.items():
+			#For each dependence
+			for transform_dep_pos in xrange(len(transform_deps)):
+				#Get the name of the transform dependence
+				transform_dep_name=transform_deps[transform_dep_pos]
+
+				self.debug_print("Setting up dependence from transform '%s' to transform '%s'..."%(transform_name,transform_dep_name))
+
+				#Get the transform instances
+				transform=self.registered_transforms[transform_name]
+				transform_dep=self.registered_transforms[transform_dep_name]
+
+				#Get the local name of the dependence
+				transform_dep_name_local=transform.input_names[transform_dep_pos]
+
+				#Assign the dependences to the transform
+				self.debug_print("Assigning transform '%s' to field '%s' of transform '%s'..."%(transform_dep_name,transform_dep_name_local,transform_name))
+				setattr(transform,transform_dep_name_local,transform_dep)
+
+	#Assigns the given chain to the given field name in the given module
+	def assign_chain(self,module,chain_name,chain):
+		setattr(module,chain_name,self.registered_transforms[chain.start])
+
+	#Registers a transform with Aether
+	def register_transform(self,transform):
+		self.debug_print("Registering transform '%s(%s)'..."%(transform.name,transform.__class__.__name__))
+		self.registered_transforms[transform.name]=transform
+
+	#Registers a module with Aether
+	def register_module(self,module):
+		self.debug_print("Registering module '%s'..."%(module.__module__))
+		self.registered_modules.append(module)
+
+	#Run Aether!
+	def run(self):
 		#Update sys.path with the directories specified in aether.dirs
 		self.update_path()
 
-		#Try to import each module specified in the settings
-		for mod_name in self.settings.aether.modules:
-			#Create an instance of the module
-			module=self.create_component(mod_name,mod_name)
-
-			#Register the module
-			self.register_module(module)
-
-			#Recursively create the dependences for this module
-			self.create_deps(module)
-
-	#Attempts to create an instance of the component of the given name
-	def create_component(self,class_name,comp_name):
-		try:
-			#Import the module (file) that the component is in
-			exec('from %s import %s'%(class_name,class_name))
-			self.debug_print("Imported component '%s'..."%(class_name))
-
-			try:
-				#Create an instance of the component
-				exec('component=%s()'%(class_name))
-				self.debug_print("Created component '%s'..."%(class_name))
-			except Exception,e:
-				raise AetherComponentLoadError("Error while instantiating component '%s'..."%(class_name),e)
-		except ImportError,e:
-			raise AetherComponentLoadError("Could not import component '%s'..."%(class_name),e)
-		except Exception,e:
-			raise AetherComponentLoadError("Error while importing component '%s': %s"%(class_name,e),e)
-
-		#Setup default settings for the component
-		component.name=comp_name
-		try:
-			for name,value in component.defaults.items():
-				setattr(getattr(AetherObject.settings,component.name),name,value)
-		except AttributeError,e: pass
-
-		#Tell the component to initalize
-		try:
-			component.init()
-		except AttributeError,e: pass
-
-		return component
-
-	#Reigsters a module with Aether
-	def register_module(self,module):
-		self.debug_print("Registering module '%s'..."%(module.__module__))
-		self.modules.append(module)
-
-	#Creates the dependences for the given component (module or transform)
-	def create_deps(self,component):
-		#Create dependences recursively for the given component
-		try:
-			for dep in component.deps:
-				dep_component=self.create_component(dep[0],dep[1])
-				setattr(component,dep[1],dep_component)
-				self.create_deps(dep_component)
-		except AttributeError,e: pass
-
-	def run(self):
 		#Attempt to load the modules specified in settings
 		self.load_modules()
 
 		#Make sure we have one or more modules ready to run
-		if 0==len(self.modules):
+		if 0==len(self.registered_modules):
 			raise AetherComponentLoadError('Aether must have at least one module registered to run.')
 
 		#Initialize pygame
@@ -96,7 +188,7 @@ class AetherDriver(AetherObject):
 		running = True
 
 		mod_index = 0
-		self.curr_module = self.modules[mod_index]
+		self.curr_module = self.registered_modules[mod_index]
 
 		# do the main loop
 		while running:
@@ -114,8 +206,8 @@ class AetherDriver(AetherObject):
 					pygame.mouse.set_visible(not pygame.mouse.set_visible(True))
 				elif event.type == KEYDOWN and event.key == K_s :
 					self.curr_module.deactivate()
-					mod_index = (mod_index+1)%len(self.modules)
-					self.curr_module = self.modules[mod_index]
+					mod_index = (mod_index+1)%len(self.registered_modules)
+					self.curr_module = self.registered_modules[mod_index]
 					self.curr_module.activate()
 				else :
 					self.curr_module._process_event_delegate(event)

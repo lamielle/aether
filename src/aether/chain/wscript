@@ -1,0 +1,11 @@
+import os
+
+def set_options(opt): pass
+
+def configure(conf): pass
+
+def build(bld):
+
+	inst_dir='aether'+os.sep+'chain'
+
+	install_files('PREFIX',inst_dir,'ScaledCameraChain.py')

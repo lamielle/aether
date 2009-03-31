@@ -1,5 +1,5 @@
 '''
-Base transform class that all other transformations should inherit from.
+Base transform class that all other transforms should inherit from.
 :Author: Alan LaMielle
 '''
 

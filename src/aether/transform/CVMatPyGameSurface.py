@@ -1,7 +1,7 @@
 '''
-Transform that reads frames from a camera device.
+Transform that converts from a cvMat (image) to a PyGame surface.
 
-read() result: a pygame surface with capturing dimensions
+read() result: a pygame surface of the same size as its input
 
 :Author: Alan LaMielle
 '''
@@ -9,16 +9,16 @@ read() result: a pygame surface with capturing dimensions
 import pygame
 from aether.core import AetherTransform
 
-class CameraTransform(AetherTransform):
+class CVMatPyGameSurface(AetherTransform):
 
-	#Default dependences
-	deps=(('FlipTransform','flip_cam'),)
+	#Names of the inputs to this transform
+	input_names=('input',)
 
 	def read(self):
 		'''Capture the current frame from the camera and return it as a pyGame surface'''
 
 		#Read the current frame from the flipped camera
-		frame=self.flip_cam.read()
+		frame=self.input.read()
 
 		#This is assuming an OpenCV camera backend
 		#In the future, it would be nice to be able to change out the camera backend
@@ -37,6 +37,6 @@ class CameraTransform(AetherTransform):
 #			cv.cvCvtColor(cvt_scale,cvt_color,cv.CV_GRAY2RGB)
 
 		# create a pygame surface
-		frame_surface=pygame.image.frombuffer(frame.imageData,(self.flip_cam.camera.capture_dims[0],self.flip_cam.camera.capture_dims[1]),'RGB')
+		frame_surface=pygame.image.frombuffer(frame.imageData,(frame.width,frame.height),'RGB')
 
 		return frame_surface

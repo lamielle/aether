@@ -14,6 +14,7 @@ from AetherParamModule import AetherParamModule
 
 #Transform related imports
 from AetherTransform import AetherTransform
+from AetherTransformChain import AetherTransformChain
 
 #Note: this is placed last as it causes problems if it is before the module related imports
 from AetherDriver import AetherDriver
