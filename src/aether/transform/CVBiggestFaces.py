@@ -1,40 +1,35 @@
-"""
-This transform input using the location of faces that are detected using Haar Cascade Face Detection.
+'''
+Transform that finds the biggest face in a input OpenCV cvMat image.
+
+read() result: list of the bounding boxes of the num_faces biggest faces detected. If num_faces is None, returns all detected faces.
 
 :Author Adam Labadorf and Alan LaMielle
-"""
+'''
 
 from opencv import cv,highgui
-from aether.core import CameraTransform
+from aether.core import AetherTransform
 import pygame.transform
 
-class FaceTransform(CameraTransform):
+class CVBiggestFaces(AetherTransform):
 
-	def __init__(self):
-		#Call CameraTransform constructor
-		CameraTransform.__init__(self)
+	input_names=('input',)
 
+	def init(self):
 		#Load the cascade classifier data
 		self.cascade=cv.cvLoadHaarClassifierCascade(self.file_path('haarcascade_frontalface_alt.xml'),cv.cvSize(40,40))
 
-		self.storage = cv.cvCreateMemStorage(0)
+		self.storage=cv.cvCreateMemStorage(0)
 		cv.cvClearMemStorage(self.storage)
 
 		#self._fd_dims = (240,180)
 		self._fd_dims = (180,120)
 
-	def __del__(self) :
+	def __del__(self):
 		#Only attempt to access self.storage if it exists as a field of this class
-		if 'storage' in self.__dict__:
+		if hasattr(self,'storage'):
 			#Only release the field if memory has been allocated here
 			if None!=self.storage:
 				cv.cvReleaseMemStorage(self.storage)
-
-	def _get_cv_frame(self):
-		frame=CameraTransform.get_frame(self)
-		if self.settings.FaceTransform.flip:
-			cv.cvFlip(frame,None,1)
-		return frame
 
 	def _get_fd_frame(self) :
 		frame = self._get_cv_frame()
@@ -59,11 +54,6 @@ class FaceTransform(CameraTransform):
 		elif frame.nChannels == 1 : # image is grayscale
 			# frame is grayscale
 			cv.cvCvtColor(cvt_scale,cvt_color,cv.CV_GRAY2RGB)
-
-		# create a pygame surface
-		frame_surface=pygame.image.frombuffer(cvt_color.imageData,self.capture_dims,'RGB')
-
-		return frame_surface
 
 	def get_fd_frame(self) :
 		"""Returns the image passed to Haar Classifier.  The image used for face detection is scaled down for efficiency."""
@@ -134,7 +124,7 @@ class FaceTransform(CameraTransform):
 		# sort the faces so they are in order by descending area
 		#def area(f) :
 		#	return f[1][0]-f[0][0]*f[2][1]-f[0][1]
-		
+
 		#faces.sort(lambda x,y: cmp(area(y),area(x)))
 
 		return faces
