@@ -43,7 +43,7 @@ class WindChimes(AetherModule) :
 			print pts
 			pygame.draw.polygon(screen,THECOLORS["blue"],pts,1)
 		except ValueError :
-			print 'junk'
+			#print 'junk'
 			pass
 
 		# when manually updating a body, need to set it's velocity BEFORE the call to world.update()

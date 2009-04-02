@@ -60,6 +60,7 @@ class CVCamera(AetherTransform):
 		if self.capture_dims==read_dims:
 			self.scale=False
 		else:
+			print "Tried setting capture resolution:",self.capture_dims,", got:",read_dims
 			self.scale=True
 
 	def read(self):
@@ -71,7 +72,7 @@ class CVCamera(AetherTransform):
 		#Do we need to scale the captures?
 		if self.scale:
 			scaled_frame=cv.cvCreateImage(self.cv_capture_dims,frame.depth,frame.nChannels)
-			cv.cvResize(frame,scaled_frame)
+			cv.cvResize(frame,scaled_frame,cv.CV_INTER_NN)
 			frame=scaled_frame
 
 		return frame
