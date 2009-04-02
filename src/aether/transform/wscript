@@ -10,6 +10,8 @@ def build(bld):
 
 	install_files('PREFIX',inst_dir,'CVMatPyGameSurface.py')
 	install_files('PREFIX',inst_dir,'CVFlip.py')
+	install_files('PREFIX',inst_dir,'CVTColor.py')
+	install_files('PREFIX',inst_dir,'CVResize.py')
 	install_files('PREFIX',inst_dir,'CVCamera.py')
-	install_files('PREFIX',inst_dir,'FaceTransform.py')
+	install_files('PREFIX',inst_dir,'CVBiggestFaces.py')
 	install_files('PREFIX',inst_dir,'ShadowTransform.py')
