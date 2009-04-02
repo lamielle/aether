@@ -7,10 +7,10 @@ from aether.core import AetherTransformChain
 class ScaledCameraChain(AetherTransformChain):
 
 	#Transforms in this chain: names and their type
-	transforms={'camera':'CVMatPyGameSurface','cv_camera':'CVCamera','flip_camera':'CVFlip'}
+	transforms={'camera':'CVMatPyGameSurface','cv_camera':'CVCamera','flip_camera':'CVFlip','bgr2rgb':'CVTColor','scale_cam':'CVResize'}
 
 	#Dependences from transform to transform, referenced by names defined in the 'transforms' field
-	transform_deps={'camera':('flip_camera',),'flip_camera':('cv_camera',)}
+	transform_deps={'camera':('scale_cam',),'scale_cam':('flip_camera',),'flip_camera':('bgr2rgb',),'bgr2rgb':('cv_camera',)}
 
 	#Defines the name of the start of the chain
 	#This should be automatically calculated somehow
