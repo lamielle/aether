@@ -10,3 +10,5 @@ def build(bld):
 
 	install_files('PREFIX',inst_dir,'MirrorModule.py')
 	install_files('PREFIX',inst_dir,'TikiModule.py')
+	install_files('PREFIX',inst_dir,'CalibrateModule.py')
+	install_files('PREFIX',inst_dir,'Whiteboard.py')

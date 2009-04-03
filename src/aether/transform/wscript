@@ -15,3 +15,7 @@ def build(bld):
 	install_files('PREFIX',inst_dir,'CVCamera.py')
 	install_files('PREFIX',inst_dir,'CVBiggestFaces.py')
 	install_files('PREFIX',inst_dir,'ShadowTransform.py')
+	install_files('PREFIX',inst_dir,'CVPerspective.py')
+	install_files('PREFIX',inst_dir,'CVExtractChannel.py')
+	install_files('PREFIX',inst_dir,'CVSpecifyChannels.py')
+	install_files('PREFIX',inst_dir,'LaserPoints.py')
