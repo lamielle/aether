@@ -15,6 +15,9 @@ class CVCamera(AetherTransform):
 	#Default values for settings this transform needs
 	defaults={'capture_dims':(640,480),'cam_num':0}
 
+	#Dictionary of capture objects
+	_captures={}
+
 	def init(self):
 		'''Inititalize the camera associated with the camera number specified in the settings (cam_num).  Image captures will be of the dimensions specified in settings (capture_dims).'''
 
@@ -27,8 +30,10 @@ class CVCamera(AetherTransform):
 	def _init_camera(self,cam_num):
 		'''Initializes the camera associated with the given camera number'''
 
-		#Create the OpenCV camera capture object
-		self._capture=highgui.cvCreateCameraCapture(cam_num)
+		#Create the OpenCV camera capture object if one has not been created already
+		if cam_num not in self._captures:
+			self._captures[cam_num]=highgui.cvCreateCameraCapture(cam_num)
+		self._capture=self._captures[cam_num]
 
 		#Make sure the camera object was created
 		if not self._capture:
