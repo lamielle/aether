@@ -13,6 +13,7 @@ import pygame.transform
 class CVBiggestFaces(AetherTransform):
 
 	input_names=('input',)
+	defaults={'fd_dims':(180,120)}
 
 	def init(self):
 		#Load the cascade classifier data
@@ -21,9 +22,6 @@ class CVBiggestFaces(AetherTransform):
 		self.storage=cv.cvCreateMemStorage(0)
 		cv.cvClearMemStorage(self.storage)
 
-		#self._fd_dims = (240,180)
-		self._fd_dims = (180,120)
-
 	def __del__(self):
 		#Only attempt to access self.storage if it exists as a field of this class
 		if hasattr(self,'storage'):
@@ -31,41 +29,17 @@ class CVBiggestFaces(AetherTransform):
 			if None!=self.storage:
 				cv.cvReleaseMemStorage(self.storage)
 
+	def read(self):
+		return [(0,0),(0.10,0),(0.10,0.10),(0,0.10)]
+
 	def _get_fd_frame(self) :
 		frame = self._get_cv_frame()
 		# convert image to grayscale and scale it down for speed
 		cvt_gray = cv.cvCreateImage(cv.cvSize(frame.width,frame.height),8,1)
 		cv.cvCvtColor(frame,cvt_gray,cv.CV_BGR2GRAY)
-		scaled_gray = cv.cvCreateImage(cv.cvSize(self._fd_dims[0],self._fd_dims[1]),8,1)
+		scaled_gray = cv.cvCreateImage(cv.cvSize(self.fd_dims[0],self.fd_dims[1]),8,1)
 		cv.cvResize(cvt_gray,scaled_gray,cv.CV_INTER_LINEAR)
 		return scaled_gray
-
-	def _cv_to_pygame(self,frame) :
-
-		# scale the image to size of the window
-		cvt_scale = cv.cvCreateImage(cv.cvSize(self.capture_dims[0],self.capture_dims[1]),frame.depth,frame.nChannels)
-		cv.cvResize(frame,cvt_scale,cv.CV_INTER_LINEAR)
-
-		# need to convert the colorspace differently depending on where the image came from
-		cvt_color = cv.cvCreateImage(cv.cvSize(cvt_scale.width,cvt_scale.height),cvt_scale.depth,3)
-		if frame.nChannels == 3 : # image is BGR
-			# frame is in BGR format, convert it to RGB so the sky isn't orange
-			cv.cvCvtColor(cvt_scale,cvt_color,cv.CV_BGR2RGB)
-		elif frame.nChannels == 1 : # image is grayscale
-			# frame is grayscale
-			cv.cvCvtColor(cvt_scale,cvt_color,cv.CV_GRAY2RGB)
-
-	def get_fd_frame(self) :
-		"""Returns the image passed to Haar Classifier.  The image used for face detection is scaled down for efficiency."""
-		fd_frame = self._get_fd_frame()
-		fd_surface = self._cv_to_pygame(fd_frame)
-		return fd_surface
-
-	def get_curr_frame(self) :
-		"""Capture the current frame from OpenCV, returns pygame.Surface object"""
-		curr_frame = self._get_cv_frame()
-		curr_frame_surface = self._cv_to_pygame(curr_frame)
-		return curr_frame_surface
 
 	def _detect_faces(self,biggest=False) :
 		"""Run OpenCV's Haar detection on the current frame, returning the rectangle with the largest area"""
