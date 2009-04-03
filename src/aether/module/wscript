@@ -9,3 +9,4 @@ def build(bld):
 	inst_dir='aether'+os.sep+'module'
 
 	install_files('PREFIX',inst_dir,'MirrorModule.py')
+	install_files('PREFIX',inst_dir,'TikiModule.py')
