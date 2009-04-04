@@ -100,6 +100,7 @@ class AetherDriver(AetherObject):
 
 	#Sets up the given transform:
 	#-Sets the transform's name so it's specific settings may be accessed directly
+	#-Sets the transform's default settings
 	def setup_transform(self,transform,trans_name):
 		#Set the transform's name
 		transform.name=trans_name
@@ -112,11 +113,8 @@ class AetherDriver(AetherObject):
 			#We found defaults, setup the settings now
 			#For each setting name/value
 			for name,value in defaults.items():
-				#Get the settings section for the transform
-				settings_section=getattr(AetherObject.settings,transform.name)
-
-				#Set the settings value in the appropriate section
-				setattr(settings_section,name,value)
+				#Set the settings value in the appropriate section if it doesn't exist already
+				self.settings_set(transform.name,name,value,True)
 
 		#Get the init method of the transform's class
 		try:
