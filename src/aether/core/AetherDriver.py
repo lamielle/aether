@@ -36,11 +36,11 @@ class AetherDriver(AetherObject):
 				#Create an instance of the class
 				exec('instance=%s()'%(class_name))
 				self.debug_print("Created instance of class '%s'..."%(class_name))
-			except Exception,e:
+			except Exception as e:
 				raise AetherComponentLoadError("Error while instantiating class '%s'..."%(class_name),e)
-		except ImportError,e:
+		except ImportError as e:
 			raise AetherComponentLoadError("Could not import class '%s'..."%(class_name),e)
-		except Exception,e:
+		except Exception as e:
 			raise AetherComponentLoadError("Error while importing class '%s': %s"%(class_name,e),e)
 
 		return instance
@@ -73,7 +73,7 @@ class AetherDriver(AetherObject):
 
 				#Assign the chain the the proper field in the module
 				self.assign_chain(module,chain_name,chain)
-		except AttributeError,e:
+		except AttributeError as e:
 			#Problem while setting up chains
 			raise AetherComponentLoadError("Error while setting up chains for module '%s'..."%(module.name),e)
 		else:
@@ -108,7 +108,7 @@ class AetherDriver(AetherObject):
 		#Setup default settings for the transform
 		try:
 			defaults=transform.defaults
-		except AttributeError,e: pass
+		except AttributeError as e: pass
 		else:
 			#We found defaults, setup the settings now
 			#For each setting name/value
@@ -119,7 +119,7 @@ class AetherDriver(AetherObject):
 		#Get the init method of the transform's class
 		try:
 			init_method=transform.__class__.init
-		except AttributeError,e: pass
+		except AttributeError as e: pass
 		else:
 			#Call the init method since we found one
 			init_method(transform)

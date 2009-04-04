@@ -25,10 +25,10 @@ class AetherObject(object):
 	def __getattr__(self,item):
 		try:
 			res=object.__getattribute__(self,item)
-		except AttributeError,e:
+		except AttributeError as e:
 			try:
 				res=getattr(getattr(self.settings,self.__dict__['name']),item)
-			except (KeyError,AttributeError),e:
+			except (KeyError,AttributeError) as e:
 				res=getattr(getattr(self.settings,'aether'),item)
 		return res
 

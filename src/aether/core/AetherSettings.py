@@ -70,10 +70,10 @@ class AetherSettings(AetherObject):
 			try:
 				with file(self.aether.settings_file,'r') as f:
 					settings=yaml.load(f)
-			except TypeError,e:
+			except TypeError as e:
 				print "Error: Cannot load Aether YAML settings file '%s', please make sure this is a valid Aether YAML settings file (Exception: %s)."%(self.aether.settings_file,e)
 				self.loaded=False
-			except yaml.scanner.ScannerError,e:
+			except yaml.scanner.ScannerError as e:
 				print "Error: Invalid Aether YAML settings file syntax in file '%s' (Exception: %s)."%(self.aether.settings_file,e)
 				self.loaded=False
 
@@ -104,10 +104,10 @@ class AetherSettings(AetherObject):
 					for name,value in values.items():
 						setattr(getattr(self,section),name,value)
 						self.debug_print("|-Found value: %s: %s (%s)"%(name,repr(value),type(value)))
-				except AttributeError,e:
+				except AttributeError as e:
 					print "Error: Incorrect settings dictionary format: All sections must map to a Python dictionary (Exception: %s)."%(e)
 					self.loaded=False
-		except AttributeError,e:
+		except AttributeError as e:
 			print "Error: The given settings_dict object is not a dictionary (Exception: %s)."%(e)
 			self.loaded=False
 
@@ -128,10 +128,10 @@ class AetherSettings(AetherObject):
 
 			self.debug_print("Wrote settings to file '%s'..."%(self.aether.settings_file))
 			self.debug_print(yaml.dump(settings,default_flow_style=False))
-		except IOError,e:
+		except IOError as e:
 			print "Error: Unable to open Aether YAML settings file '%s' for writing (Exception: %s)"%(self.aether.settings_file,e)
 			self.saved=False
-		except TypeError,e:
+		except TypeError as e:
 			print "Error: Cannot save to Aether YAML settings file '%s' (Exception: %s)."%(self.aether.settings_file,e)
 			self.saved=False
 
