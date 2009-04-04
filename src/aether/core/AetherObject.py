@@ -28,6 +28,22 @@ class AetherObject(object):
 				res=object.__getattribute__(self,item)
 		return res
 
+	#Helper method for setting settings values
+	#section: Name of the settings section
+	#name: Name of the value to set
+	#value: Value to set
+	#test_exist: If True, the value will only be set if the settings value does not already exist
+	def settings_set(self,section_name,value_name,value,test_exist=False):
+		#Get the specified settings section
+		settings_section=getattr(self.settings,section_name)
+
+		#Determine if the settings value exists
+		exists=hasattr(settings_section,value_name)
+
+		#Set the value if we are not testing for existence or if the value does not exist
+		if not test_exist or not exists:
+			setattr(settings_section,value_name,value)
+
 	#Helper method for debug printing
 	#Will print only if self.settings.aether.debug is True
 	def debug_print(self,output):
