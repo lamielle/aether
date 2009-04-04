@@ -17,3 +17,6 @@ class ScaledCameraChain(AetherTransformChain):
 	#Possibly by building a graph of the deps, toplolgically sorting the graph, and taking the nodes that nothing depends on
 	#For now this is explicitly defined
 	start='camera'
+
+	#Settings values for transforms
+	transform_settings={'cv_camera':{'cam_num':0}}

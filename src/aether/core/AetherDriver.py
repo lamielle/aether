@@ -81,9 +81,22 @@ class AetherDriver(AetherObject):
 			self.register_module(module)
 
 	#Sets up the given chain:
+	#-Loads any settings specified by the chain
 	#-Creates instances of all transforms needed for the chain
 	#-Sets up each transform
 	def setup_chain(self,chain):
+		#Load settings values for this chain
+		try:
+			transform_settings=chain.transform_settings
+		except AttributeError as e: pass
+		else:
+			#We found transform settings, load them now
+			#For each settings category/values dict
+			for section_name,section_settings in transform_settings.items():
+				self.settings_load(section_name,section_settings,True)
+
+		print self.settings
+
 		#Create each transform in the chain
 		for trans_name,trans_class in chain.transforms.items():
 			#Create the transform
@@ -110,11 +123,7 @@ class AetherDriver(AetherObject):
 			defaults=transform.defaults
 		except AttributeError as e: pass
 		else:
-			#We found defaults, setup the settings now
-			#For each setting name/value
-			for name,value in defaults.items():
-				#Set the settings value in the appropriate section if it doesn't exist already
-				self.settings_set(transform.name,name,value,True)
+			self.settings_load(transform.name,defaults,True)
 
 		#Get the init method of the transform's class
 		try:
