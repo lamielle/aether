@@ -32,9 +32,18 @@ class AetherObject(object):
 				res=getattr(getattr(self.settings,'aether'),item)
 		return res
 
+	#Helper method for setting a dictionary of settings name/value pairs
+	#section_name: Name of the settings section
+	#settings_dict: Dictionary of settings name/value pairs
+	#test_exist: If True, the value will only be set if the settings value does not already exist
+	def settings_load(self,section_name,settings_dict,test_exist=False):
+		for value_name,value in settings_dict.items():
+			#Set the settings value in the given settings section
+			self.settings_set(section_name,value_name,value,test_exist)
+
 	#Helper method for setting settings values
-	#section: Name of the settings section
-	#name: Name of the value to set
+	#section_name: Name of the settings section
+	#value_name: Name of the value to set
 	#value: Value to set
 	#test_exist: If True, the value will only be set if the settings value does not already exist
 	def settings_set(self,section_name,value_name,value,test_exist=False):
