@@ -16,16 +16,20 @@ class AetherObject(object):
 	def __init__(self): pass
 
 	#Modified getattr:
-	#First searches settings.aether for the item
-	#then searches settings.(self.name) for the item
+	#Item search order:
+	#1) The object's fields
+	#2) The settings.(self.name) category
+	#3) The settings.aether category
+	#
+	#The idea here is to search fields in order from 'most local' to 'most global'
 	def __getattr__(self,item):
 		try:
-			res=getattr(getattr(self.settings,'aether'),item)
+			res=object.__getattribute__(self,item)
 		except AttributeError,e:
 			try:
 				res=getattr(getattr(self.settings,self.__dict__['name']),item)
-			except AttributeError,e:
-				res=object.__getattribute__(self,item)
+			except (KeyError,AttributeError),e:
+				res=getattr(getattr(self.settings,'aether'),item)
 		return res
 
 	#Helper method for setting settings values
