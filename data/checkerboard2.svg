@@ -26,14 +26,14 @@
        id="perspective10" />
     <clipPath
        clipPathUnits="userSpaceOnUse"
-       id="clipPath3272">
+       id="clipPath3297">
       <rect
-         y="63.175854"
-         x="63.556313"
-         height="594.00201"
-         width="595.41315"
-         id="rect3274"
-         style="fill:#000000;fill-opacity:0.96078431;fill-rule:nonzero;stroke:none;stroke-width:10.10613251;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.96078431" />
+         style="fill:#000000;fill-opacity:0.96078431;fill-rule:nonzero;stroke:none;stroke-width:10.10613251;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.96078431"
+         id="rect3299"
+         width="664.95673"
+         height="663.3808"
+         x="28.784517"
+         y="28.486467" />
     </clipPath>
   </defs>
   <sodipodi:namedview
@@ -75,7 +75,10 @@
      id="layer1">
     <g
        id="g3204"
-       clip-path="url(#clipPath3272)">
+       clip-path="url(#clipPath3297)"
+       inkscape:export-filename="/home/labadorf/development/aether-adam/data/checkerboard2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
       <g
          inkscape:export-ydpi="90"
          inkscape:export-xdpi="90"
@@ -477,11 +480,15 @@
          y="630.14417" />
     </g>
     <rect
-       style="fill:#000000;fill-opacity:0;fill-rule:nonzero;stroke:#f5f5f5;stroke-width:10.10613251000000012;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.96078430999999997"
+       style="fill:#000000;fill-opacity:0;fill-rule:nonzero;stroke:#f5f5f5;stroke-width:11.28651714;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.96078431"
        id="rect2430"
-       width="595.41315"
-       height="594.00201"
-       x="63.556313"
-       y="63.175854" />
+       width="664.95673"
+       height="663.3808"
+       x="28.784517"
+       y="28.486467"
+       inkscape:export-filename="/home/labadorf/development/aether-adam/data/checkerboard2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       clip-path="none" />
   </g>
 </svg>

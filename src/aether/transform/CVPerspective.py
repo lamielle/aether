@@ -9,6 +9,8 @@ read() result: New image converted using the conversion constant specified with 
 
 from opencv import cv
 from aether.core import AetherTransform
+from numpy import array, rot90
+from math import sqrt
 
 class CVPerspective(AetherTransform):
 
@@ -17,20 +19,34 @@ class CVPerspective(AetherTransform):
 
 	def read(self):
 		source = self.input.read()
+
 		if not self.calibrated:
 
 			success, corners = cv.cvFindChessboardCorners(source, cv.cvSize(self.grid[0],self.grid[1]))
-			self.debug_print('CVPerspective: success, corners = (%d,%s(%d))'%(success,corners,len(corners)))
 
-			if len(corners) == self.grid[0]*self.grid[1] :
+			if success == 1 :
+				cv.cvDrawChessboardCorners(source,cv.cvSize(self.grid[0],self.grid[1]),corners,len(corners))
+				self.debug_print('CVPerspective: success, corners = (%d,%s(%d))'%(success,corners,len(corners)))
 				n_points = self.grid[0]*self.grid[1]
 
-				grid_x = self.dims[0]/self.grid[0]
-				grid_y = self.dims[1]/self.grid[1]
+				grid_x = self.dims[0]/(self.grid[0]+1)
+				grid_y = self.dims[1]/(self.grid[1]+1)
 				self.dest = []
-				for i in range(0,self.grid[0]) :
-					for j in range(0,self.grid[1]) :
+				for i in range(1,self.grid[0]+1) :
+					for j in range(1,self.grid[1]+1) :
 						self.dest.append((j*grid_x,i*grid_y))
+
+				# sometimes the find corners function orders the points different, rotate them to make them consistent
+				# second zip parameter is # of cc rotations needed to correct matrix
+				scrn_corners = zip([(v1,v2) for i,v1 in enumerate([1,self.dims[0]]) for j,v2 in enumerate([1,self.dims[1]])],[2,3,1,0])
+				distances = [(sqrt((x[0][0]-corners[0].x)**2+(x[0][1]-corners[0].x)**2),x[1]) for x in scrn_corners]
+				min_corner = min(distances)
+
+				if min_corner[1] != 0 :
+					rotator = array([corners])
+					rotator = rotator.reshape((self.grid))
+					rotator = rot90(rotator,min_corner[1])
+					corners = rotator.flatten().tolist()
 
 				s = cv.cvCreateMat(n_points,2,cv.CV_32F)
 				d = cv.cvCreateMat(n_points,2,cv.CV_32F)
