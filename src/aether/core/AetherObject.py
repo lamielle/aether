@@ -16,45 +16,81 @@ class AetherObject(object):
 	def __init__(self): pass
 
 	#Modified getattr:
+	#This is the counterpart to the modified setattr method.
+	#This method reads items from certain settings sections in addition to object attributes.
 	#Item search order:
-	#1) The object's fields
-	#2) The settings.(self.name) category
-	#3) The settings.aether category
+	#1) The object's attributes
+	#2) The settings.(self.name) section
+	#3) The settings.aether section
 	#
-	#The idea here is to search fields in order from 'most local' to 'most global'
+	#The idea here is to search attributes in order from 'most local' to 'most global'
 	def __getattr__(self,item):
+		#Search the objects attributes
 		try:
 			res=object.__getattribute__(self,item)
 		except AttributeError as e:
 			try:
-				res=getattr(getattr(self.settings,self.__dict__['name']),item)
+				#Search the settings section self.name
+				res=self.settings_get(self.__dict__['name'],item)
 			except (KeyError,AttributeError) as e:
-				res=getattr(getattr(self.settings,'aether'),item)
+				res=self.settings_get('aether',item)
 		return res
+
+	#Modified setattr:
+	#This is the counterpart to the modified getattr method.
+	#This method sets items in certain settings sections in addition to object attributes.
+	#Items in settings sections can only be set if they already exist, no new settings names can be created.
+	#Item setting order:
+	#1) The settings.(self.name) section (if value already exists)
+	#2) The settings.aether section (if value already exists)
+	#3) The object's attributes
+	def __setattr__(self,item,value):
+		#Search for the self.name section
+		try:
+			self.settings_set(self.__dict__['name'],item,value,raise_not_exists=True)
+		except (KeyError,AttributeError) as e:
+			try:
+				self.settings_set('aether',item,value,raise_not_exists=True)
+			except AttributeError as e:
+				object.__setattr__(self,item,value)
+
+	#Helper method for reading a settings value
+	#section_name: The name of the section to read from
+	#value_name: The name of the settings value to read
+	#
+	#This method raises an AttributeError if the given value_name does not exist in the given section
+	def settings_get(self,section_name,value_name):
+		return getattr(getattr(self.settings,section_name),value_name)
 
 	#Helper method for setting a dictionary of settings name/value pairs
 	#section_name: Name of the settings section
 	#settings_dict: Dictionary of settings name/value pairs
-	#test_exist: If True, the value will only be set if the settings value does not already exist
-	def settings_load(self,section_name,settings_dict,test_exist=False):
+	#test_exists: If True, the value will only be set if the settings value does not already exist
+	#raise_not_exists: If True and the settings value already exists, an AttributeError will be raised
+	def settings_load(self,section_name,settings_dict,test_exists=False,raise_not_exists=False):
 		for value_name,value in settings_dict.items():
 			#Set the settings value in the given settings section
-			self.settings_set(section_name,value_name,value,test_exist)
+			self.settings_set(section_name,value_name,value,test_exists,raise_not_exists)
 
 	#Helper method for setting settings values
 	#section_name: Name of the settings section
 	#value_name: Name of the value to set
 	#value: Value to set
-	#test_exist: If True, the value will only be set if the settings value does not already exist
-	def settings_set(self,section_name,value_name,value,test_exist=False):
+	#test_exists: If True, the value will only be set if the settings value does not already exist
+	#raise_not_exists: If True and the settings value does not exist, an AttributeError will be raised
+	def settings_set(self,section_name,value_name,value,test_exists=False,raise_not_exists=False):
 		#Get the specified settings section
 		settings_section=getattr(self.settings,section_name)
 
 		#Determine if the settings value exists
 		exists=hasattr(settings_section,value_name)
 
+		#Raise an AttributeError if the settings value exists and we are supposed to raise exceptions
+		if not exists and raise_not_exists:
+			raise AttributeError('Attempted to set a settings value that already exists: %s.%s'%(section_name,value))
+
 		#Set the value if we are not testing for existence or if the value does not exist
-		if not test_exist or not exists:
+		if not test_exists or not exists:
 			setattr(settings_section,value_name,value)
 
 	#Helper method for debug printing

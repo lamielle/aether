@@ -91,9 +91,9 @@ class AetherDriver(AetherObject):
 		except AttributeError as e: pass
 		else:
 			#We found transform settings, load them now
-			#For each settings category/values dict
+			#For each settings section/values dict
 			for section_name,section_settings in transform_settings.items():
-				self.settings_load(section_name,section_settings,True)
+				self.settings_load(section_name,section_settings,test_exists=True)
 
 		print self.settings
 
@@ -123,7 +123,7 @@ class AetherDriver(AetherObject):
 			defaults=transform.defaults
 		except AttributeError as e: pass
 		else:
-			self.settings_load(transform.name,defaults,True)
+			self.settings_load(transform.name,defaults,test_exists=True)
 
 		#Get the init method of the transform's class
 		try:
