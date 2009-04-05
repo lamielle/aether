@@ -104,7 +104,7 @@ class AetherObject(object):
 		search_dirs=self.settings.aether.dirs
 
 		#Append system directories
-		search_dirs.extend([aether.base_dir+os.sep+name for name in self.system_dirs])
+		search_dirs=search_dirs+[aether.base_dir+os.sep+name for name in self.system_dirs]
 
 		return search_dirs
 
