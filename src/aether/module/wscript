@@ -12,3 +12,11 @@ def build(bld):
 	install_files('PREFIX',inst_dir,'TikiModule.py')
 	install_files('PREFIX',inst_dir,'CalibrateModule.py')
 	install_files('PREFIX',inst_dir,'Whiteboard.py')
+
+	# line of demarcation
+
+	install_files('PREFIX',inst_dir,'ShadowModule.py')
+	install_files('PREFIX',inst_dir,'CatchOSIfUCan.py')
+	install_files('PREFIX',inst_dir,'SoundMosaic.py')
+	install_files('PREFIX',inst_dir,'PymunkModule.py')
+

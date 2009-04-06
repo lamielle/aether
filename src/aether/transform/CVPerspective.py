@@ -9,7 +9,7 @@ read() result: New image converted using the conversion constant specified with 
 
 from opencv import cv
 from aether.core import AetherTransform
-from numpy import array, rot90
+from numpy import array, rot90, fliplr
 from math import sqrt
 
 class CVPerspective(AetherTransform):
@@ -26,7 +26,7 @@ class CVPerspective(AetherTransform):
 
 			if success == 1 :
 				cv.cvDrawChessboardCorners(source,cv.cvSize(self.grid[0],self.grid[1]),corners,len(corners))
-				self.debug_print('CVPerspective: success, corners = (%d,%s(%d))'%(success,corners,len(corners)))
+				#self.debug_print('CVPerspective: success, corners = (%d,%s(%d))'%(success,corners,len(corners)))
 				n_points = self.grid[0]*self.grid[1]
 
 				grid_x = self.dims[0]/(self.grid[0]+1)
@@ -36,11 +36,14 @@ class CVPerspective(AetherTransform):
 					for j in range(1,self.grid[1]+1) :
 						self.dest.append((j*grid_x,i*grid_y))
 
-				# sometimes the find corners function orders the points different, rotate them to make them consistent
-				# second zip parameter is # of cc rotations needed to correct matrix
-				scrn_corners = zip([(v1,v2) for i,v1 in enumerate([1,self.dims[0]]) for j,v2 in enumerate([1,self.dims[1]])],[2,3,1,0])
-				distances = [(sqrt((x[0][0]-corners[0].x)**2+(x[0][1]-corners[0].x)**2),x[1]) for x in scrn_corners]
+				# loop through corners (clockwise wrapped), figure out which is closest to origin
+				four_corners = [corners[0],corners[self.grid[0]-1],corners[-1],corners[self.grid[0]*(self.grid[1]-1)]]
+				distances = []
+				for i,corner in enumerate(four_corners) :
+					distances.append((sqrt(corner.x**2+corner.y**2),i))
 				min_corner = min(distances)
+				#self.debug_print(distances)
+				#self.debug_print(min_corner)
 
 				if min_corner[1] != 0 :
 					rotator = array([corners])

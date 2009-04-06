@@ -46,4 +46,16 @@ def build(bld):
 	install_files('PREFIX',inst_dir,'poof4.png')
 	install_files('PREFIX',inst_dir,'poofs.svg')
 	install_files('PREFIX',inst_dir,'ubuntu-logo.png')
+	install_files('PREFIX',inst_dir,'circlejewel.png')
+	install_files('PREFIX',inst_dir,'squarejewel.png')
 	install_files('PREFIX',inst_dir,'windows-logo.png')
+
+	install_files('PREFIX',inst_dir,'high.wav')
+	install_files('PREFIX',inst_dir,'mid1.wav')
+	install_files('PREFIX',inst_dir,'mid2.wav')
+	install_files('PREFIX',inst_dir,'low.wav')
+
+	install_files('PREFIX',inst_dir,'sine_1.wav')
+	install_files('PREFIX',inst_dir,'sine_2.wav')
+	install_files('PREFIX',inst_dir,'sine_3.wav')
+	install_files('PREFIX',inst_dir,'sine_4.wav')
