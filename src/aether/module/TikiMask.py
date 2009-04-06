@@ -12,7 +12,7 @@ import pygame.image
 from pygame.color import THECOLORS
 import pygame.transform
 
-class TikiModule(AetherModule):
+class TikiMask(AetherModule):
 
 	#Chains this module needs
 	chains={'camera':'ScaledCameraChain','faces':'FacesChain'}
