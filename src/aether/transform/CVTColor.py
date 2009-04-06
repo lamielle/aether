@@ -12,10 +12,15 @@ from aether.core import AetherTransform
 class CVTColor(AetherTransform):
 
 	input_names=('input',)
-	defaults={'convert_method':cv.CV_BGR2RGB,'enabled':True}
+	defaults={'convert_method':cv.CV_BGR2RGB,'num_channels':3,'enabled':True}
 
 	def read(self):
 		frame=self.input.read()
 		if self.enabled:
-			cv.cvCvtColor(frame,frame,self.convert_method)
+			if self.num_channels==frame.nChannels:
+				new_frame=frame
+			else:
+				new_frame=cv.cvCreateImage(cv.cvSize(frame.width,frame.height),frame.depth,self.num_channels)
+			cv.cvCvtColor(frame,new_frame,self.convert_method)
+			frame=new_frame
 		return frame

@@ -9,6 +9,6 @@ def build(bld):
 	inst_dir='aether'+os.sep+'chain'
 
 	install_files('PREFIX',inst_dir,'ScaledCameraChain.py')
-	install_files('PREFIX',inst_dir,'BiggestFaceChain.py')
+	install_files('PREFIX',inst_dir,'FacesChain.py')
 	install_files('PREFIX',inst_dir,'PerspectiveChain.py')
 	install_files('PREFIX',inst_dir,'LaserPointerChain.py')

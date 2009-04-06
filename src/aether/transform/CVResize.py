@@ -12,7 +12,7 @@ from aether.core import AetherTransform
 class CVResize(AetherTransform):
 
 	input_names=('input',)
-	defaults={'new_size':(640,480),'interplation_method':cv.CV_INTER_LINEAR}
+	defaults={'new_size':(640,480),'interplation_method':cv.CV_INTER_NN}
 
 	def read(self):
 		frame=self.input.read()

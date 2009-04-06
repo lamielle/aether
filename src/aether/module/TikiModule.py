@@ -15,7 +15,7 @@ import pygame.transform
 class TikiModule(AetherModule):
 
 	#Chains this module needs
-	chains={'camera':'ScaledCameraChain','face':'BiggestFaceChain'}
+	chains={'camera':'ScaledCameraChain','faces':'FacesChain'}
 
 	def __init__(self):
 		# load our image, this will look in the directory where the file is executed
@@ -25,24 +25,20 @@ class TikiModule(AetherModule):
 		self.tiki.set_colorkey(THECOLORS["white"])
 
 	def draw(self,screen):
-		# get the current frame
+		#Get the current frame
 		capture=self.camera.read()
 
-		# blit it to the screen
+		#Blit it to the screen
 		screen.blit(capture,(0,0))
 
-		# get the rectangle of the biggest face the input provider can find
-		face=self.face.read()
+		#For each detected face:
+		for face in self.faces.read():
+			#Calculate the face's dimensions
+			width=face[1][0]-face[0][0]
+			height=face[2][1]-face[1][1]
 
-		# if it found a face, draw the mask
-		if face is not None:
-
-			# face.read() returns coordinates normalized to [0,1], scale it to curr dimensions
-			face=[(int(x[0]*self.dims[0]),int(x[1]*self.dims[1])) for x in face]
-
-			# figure out the face's dimensions
-			width,height=face[1][0]-face[0][0],face[2][1]-face[1][1]
-
-			# scale the original image onto a new surface and draw to the screen
+			#Scale the original image onto a new surface
 			scaled_tiki=pygame.transform.scale(self.tiki,(width,height))
+
+			#Blit the surface to the screen
 			screen.blit(scaled_tiki,face[0])

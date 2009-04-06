@@ -17,8 +17,5 @@ class MirrorModule(AetherModule):
 		#Get the current frame from the camera transform
 		curr_frame=self.camera.read()
 
-		#Scale the current frame to the screen size
-		scaled_curr_frame=pygame.transform.scale(curr_frame,self.dims)
-
 		#Blit the current frame the the screen
-		screen.blit(scaled_curr_frame,(0,0))
+		screen.blit(curr_frame,(0,0))

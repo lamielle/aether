@@ -13,7 +13,7 @@ from aether.error import AetherCameraError
 class CVCamera(AetherTransform):
 
 	#Default values for settings this transform needs
-	defaults={'capture_dims':(640,480),'cam_num':0}
+	defaults={'capture_dims':(640,480),'cam_num':0,'interplation_method':cv.CV_INTER_NN}
 
 	#Dictionary of capture objects
 	_captures={}
@@ -72,7 +72,7 @@ class CVCamera(AetherTransform):
 		#Do we need to scale the captures?
 		if self.scale:
 			scaled_frame=cv.cvCreateImage(self.cv_capture_dims,frame.depth,frame.nChannels)
-			cv.cvResize(frame,scaled_frame,cv.CV_INTER_NN)
+			cv.cvResize(frame,scaled_frame,self.interplation_method)
 			frame=scaled_frame
 
 		return frame
