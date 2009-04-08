@@ -14,6 +14,7 @@ def build(bld):
 	install_files('PREFIX',inst_dir,'Whiteboard.py')
 	install_files('PREFIX',inst_dir,'LaserPresenter.py')
 	install_files('PREFIX',inst_dir,'FaceTiler.py')
+	install_files('PREFIX',inst_dir,'EncouragerModule.py')
 
 	# line of demarcation
 
@@ -23,4 +24,3 @@ def build(bld):
 	install_files('PREFIX',inst_dir,'PymunkModule.py')
 	install_files('PREFIX',inst_dir,'LaserPointerTest.py')
 	install_files('PREFIX',inst_dir,'ShadowModuleTest.py')
-
