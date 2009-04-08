@@ -4037,6 +4037,7 @@ if __name__=="__main__":
 
 #---------- Aether Module Code ----------
 from aether.core import AetherModule
+from pygame.color import THECOLORS
 
 class LaserPresenter(AetherModule):
 
@@ -4056,5 +4057,8 @@ class LaserPresenter(AetherModule):
 			self.inited=True
 
 	def process_event(self,event):
+		if event.type == KEYDOWN :
+			if event.key == K_m:
+				self.laser.enabled=not self.laser.enabled
 		HandleEvent(event)
 #----------------------------------------

@@ -13,7 +13,7 @@ import pygame.mouse
 class PyGameMouse(AetherTransform):
 
 	input_names=('input',)
-	defaults={'shape':'square','verts':[]}
+	defaults={'shape':'square','verts':[],'enabled':True}
 
 	def read(self):
 		if self.shape == 'custom' :
@@ -23,4 +23,7 @@ class PyGameMouse(AetherTransform):
 
 		pos = pygame.mouse.get_pos()
 
-		return [[(x[0]+pos[0],x[1]+pos[1]) for x in shape]]
+		if self.enabled:
+			return [[(x[0]+pos[0],x[1]+pos[1]) for x in shape]]
+		else:
+			return []
