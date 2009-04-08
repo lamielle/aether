@@ -631,10 +631,10 @@ class Slide(Transition):
         raise AbstractError
     def render(self, t):
         cx, cy, nx, ny = self.origin(t)
-    	glBindTexture(TextureTarget, Tcurrent)
-    	DrawQuad(cx, cy, cx+1.0, cy+1.0)
-    	glBindTexture(TextureTarget, Tnext)
-    	DrawQuad(nx, ny, nx+1.0, ny+1.0)
+        glBindTexture(TextureTarget, Tcurrent)
+        DrawQuad(cx, cy, cx+1.0, cy+1.0)
+        glBindTexture(TextureTarget, Tnext)
+        DrawQuad(nx, ny, nx+1.0, ny+1.0)
 
 class SlideLeft(Slide):
     """Slide to the left"""
@@ -662,10 +662,10 @@ class Squeeze(Transition):
             t1, t2 = (Tnext, Tcurrent)
         else:
             t1, t2 = (Tcurrent, Tnext)
-    	glBindTexture(TextureTarget, t1)
-    	DrawQuad(0.0, 0.0, cx1, cy1)
-    	glBindTexture(TextureTarget, t2)
-    	DrawQuad(nx0, ny0, 1.0, 1.0)
+        glBindTexture(TextureTarget, t1)
+        DrawQuad(0.0, 0.0, cx1, cy1)
+        glBindTexture(TextureTarget, t2)
+        DrawQuad(nx0, ny0, 1.0, 1.0)
 class SqueezeHorizontal(Squeeze):
     def split(self, t): raise AbstractError
     def params(self, t):
@@ -4043,7 +4043,7 @@ class LaserPresenter(AetherModule):
 	#Chains this module needs
 	chains={'laser':'MouseChain'}
 
-	def __init__(self):
+	def init(self):
 		self.inited=False
 
 	def draw(self,screen):
