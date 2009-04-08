@@ -13,11 +13,11 @@ import pygame.transform
 class CVFaces(AetherTransform):
 
 	input_names=('input',)
-	defaults={'fd_dims':(180,120),'cascade_file':'haarcascade_frontalface_alt.xml'}
+	defaults={'fd_dims':(180,120),'haar_face_size':(40,40),'cascade_file':'haarcascade_frontalface_alt.xml'}
 
 	def init(self):
 		#Load the cascade classifier data
-		self.cascade=cv.cvLoadHaarClassifierCascade(self.file_path(self.cascade_file),cv.cvSize(40,40))
+		self.cascade=cv.cvLoadHaarClassifierCascade(self.file_path(self.cascade_file),cv.cvSize(self.haar_face_size[0],self.haar_face_size[1]))
 
 		#Allocate/init storage
 		self.storage=cv.cvCreateMemStorage(0)
