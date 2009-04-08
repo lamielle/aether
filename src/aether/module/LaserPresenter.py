@@ -6,16 +6,7 @@ It displays a set of images or PDFs and allows the user to draw on the screen wi
 :Author: Alan LaMielle and Adam Labadorf
 '''
 
-from aether.core import AetherModule
-
-class LaserPresenter(AetherModule):
-
-	#Chains this module needs
-	chains={'laser':'MouseChain'}
-
-	def draw(self,screen):
-		pass
-
+#---------- Impressive Presentation Code ----------
 # Impressive, a fancy presentation tool
 # Copyright (C) 2005-2008 Martin J. Fiedler <martin.fiedler@gmx.net>
 # portions Copyright (C) 2005 Rob Reid <rreid@drao.nrc.ca>
@@ -500,9 +491,22 @@ def SafeCall(func, args=[], kwargs={}):
         print >>sys.stderr, "----- End of traceback -----"
 
 def Quit(code=0):
-    print >>sys.stderr, "Total presentation time: %s." % \
-                        FormatTime((pygame.time.get_ticks() - StartTime) / 1000)
-    sys.exit(code)
+        StopMPlayer()
+        # ensure that background rendering is halted
+        Lrender.acquire()
+        Lcache.acquire()
+        # remove all temp files
+        if 'CacheFile' in globals():
+            del CacheFile
+        for tmp in glob.glob(TempFileName + "*"):
+            try:
+                os.remove(tmp)
+            except OSError:
+                pass
+#        pygame.quit()
+#    print >>sys.stderr, "Total presentation time: %s." % \
+#                        FormatTime((pygame.time.get_ticks() - StartTime) / 1000)
+#    sys.exit(code)
 
 
 ##### RENDERING TOOL CODE ######################################################
@@ -3574,14 +3578,14 @@ def main():
         thread.start_new_thread(RenderThread, (Pcurrent, Pnext))
 
     # start output and enter main loop
-    StartTime = pygame.time.get_ticks()
-    pygame.time.set_timer(USEREVENT_TIMER_UPDATE, 100)
-    if not(Fullscreen) and CursorImage:
-        pygame.mouse.set_visible(False)
-    DrawCurrentPage()
-    UpdateCaption(Pcurrent)
-    while True:
-        HandleEvent(pygame.event.wait())
+    #StartTime = pygame.time.get_ticks()
+    #pygame.time.set_timer(USEREVENT_TIMER_UPDATE, 100)
+    #if not(Fullscreen) and CursorImage:
+    #    pygame.mouse.set_visible(False)
+    #DrawCurrentPage()
+    #UpdateCaption(Pcurrent)
+    #while True:
+    #    HandleEvent(pygame.event.wait())
 
 
 # wrapper around main() that ensures proper uninitialization
@@ -3589,20 +3593,21 @@ def run_main():
     global CacheFile
     try:
         main()
-    finally:
-        StopMPlayer()
-        # ensure that background rendering is halted
-        Lrender.acquire()
-        Lcache.acquire()
-        # remove all temp files
-        if 'CacheFile' in globals():
-            del CacheFile
-        for tmp in glob.glob(TempFileName + "*"):
-            try:
-                os.remove(tmp)
-            except OSError:
-                pass
-        pygame.quit()
+    finally: pass
+#    finally:
+#        StopMPlayer()
+#        # ensure that background rendering is halted
+#        Lrender.acquire()
+#        Lcache.acquire()
+#        # remove all temp files
+#        if 'CacheFile' in globals():
+#            del CacheFile
+#        for tmp in glob.glob(TempFileName + "*"):
+#            try:
+#                os.remove(tmp)
+#            except OSError:
+#                pass
+#        pygame.quit()
 
 
 ##### COMMAND-LINE PARSER AND HELP #############################################
@@ -4028,3 +4033,28 @@ def run():
 if __name__=="__main__":
     ParseOptions(sys.argv[1:])
     run_main()
+#--------------------------------------------------
+
+#---------- Aether Module Code ----------
+from aether.core import AetherModule
+
+class LaserPresenter(AetherModule):
+
+	#Chains this module needs
+	chains={'laser':'MouseChain'}
+
+	def __init__(self):
+		self.inited=False
+
+	def draw(self,screen):
+		global FileName,ScreenWidth,ScreenHeight
+		if not self.inited:
+			FileName=self.presentation_file
+			ScreenWidth=self.dims[0]
+			ScreenHeight=self.dims[1]
+			run()
+			self.inited=True
+
+	def process_event(self,event):
+		HandleEvent(event)
+#----------------------------------------
