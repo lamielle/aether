@@ -31,17 +31,17 @@ class ShadowModule(AetherModule):
 			#self.debug_print('calibrating:%s'%self.settings.perspective.calibrated)
 			screen.fill((255,255,255,255)) # this is necessary for some reason
 			screen.blit(self.checkerboard,(0,0))
-			pygame.draw.rect(screen,(255,255,255,255),pygame.Rect((0,0),self.dims),5) # this helps opencv find the checkerboard
+			pygame.draw.rect(screen,(255,255,255,255),pygame.Rect((0,0),self.dims),20) # this helps opencv find the checkerboard
 		else :
-			screen.fill((0,0,55,255))
+			screen.fill((255,255,255))
 			for p in polys :
 				if len(p) > 2 :
 					pygame.draw.lines(screen,(255,100,100),1,p,2)
 
-			text = self.font.render("Min. Poly Area: %d"%self.shadow.min_area, 1, (250,250,250))
+			text = self.font.render("Min. Poly Area: %d"%self.shadow.min_area, 1, (50,50,50))
 			screen.blit(text,self.min_area_pos)
 
-			text = self.font.render("Threshold: %d"%self.settings.threshold.threshold, 1, (250,250,250))
+			text = self.font.render("Threshold: %d"%self.settings.threshold.threshold, 1, (50,50,50))
 			screen.blit(text,self.thresh_pos)
 
 	def process_event(self,event) :

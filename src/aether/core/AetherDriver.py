@@ -187,15 +187,15 @@ class AetherDriver(AetherObject):
 		#Update sys.path with the directories specified in aether.dirs
 		self.update_path()
 
+		#Initialize pygame
+		pygame.init()
+
 		#Attempt to load the modules specified in settings
 		self.load_modules()
 
 		#Make sure we have one or more modules ready to run
 		if 0==len(self.registered_modules):
 			raise AetherComponentLoadError('Aether must have at least one module registered to run.')
-
-		#Initialize pygame
-		pygame.init()
 
 		#Setup the screen
 		self.screen=pygame.display.set_mode(self.dims)

@@ -69,8 +69,12 @@ class CVPerspective(AetherTransform):
 				#self.debug_print('projection matrix:%s'%p)
 
 		if self.calibrated :
-			dst = cv.cvCreateImage(cv.cvSize(self.dims[0],self.dims[1]),source.depth,source.nChannels)
-			cv.cvWarpPerspective( source, dst, self.matrix)
-			return dst
+			try : # workaround for now
+				dst = cv.cvCreateImage(cv.cvSize(self.dims[0],self.dims[1]),source.depth,source.nChannels)
+				cv.cvWarpPerspective( source, dst, self.matrix)
+			except AttributeError :
+				pass
+			else: 
+				return dst
 
 		return source

@@ -10,24 +10,44 @@ from opencv import cv
 from aether.core import AetherTransform
 import pygame
 
-class ShadowPolys(AetherTransform):
+class ShadowPolySavior(AetherTransform):
 
 	input_names=('input',)
-	defaults={'min_area':0,'enabled':True}
+	defaults={'threshold':174,'min_area':0,'enabled':True,'debug':False}
 
 	def init(self) :
 		self.storage=cv.cvCreateMemStorage(0)
 
 	def read(self) :
 		frame=self.input.read()
-		cv_rs = cv.cvCreateImage(cv.cvSize(frame.width,frame.height),frame.depth,1)
-		cv.cvCvtColor(frame,cv_rs,cv.CV_RGB2GRAY)
-		frame = cv_rs
+		if self.debug :
+			raw_frame = cv.cvCreateImage(cv.cvSize(frame.width,frame.height),frame.depth,frame.nChannels)
+			cv.cvCopy(frame,raw_frame,None)
+			self.raw_frame_surface=pygame.image.frombuffer(frame.imageData,(frame.width,frame.height),'RGB')
+
 		if self.enabled :
+			cv_rs = cv.cvCreateImage(cv.cvSize(frame.width,frame.height),frame.depth,1)
+
+			# convert color
+			cv.cvCvtColor(frame,cv_rs,cv.CV_BGR2GRAY)
+
+			# invert the image
+			cv.cvSubRS(cv_rs, 255, cv_rs, None);
+
+			# threshold the image
+			frame = cv.cvCreateImage(cv.cvSize(frame.width,frame.height),frame.depth,1)
+			cv.cvThreshold(cv_rs, frame, self.threshold, 255, cv.CV_THRESH_BINARY)
+
+			if self.debug :
+				thresh_frame = cv.cvCreateImage(cv.cvSize(frame.width,frame.height),frame.depth,3)
+				cv.cvCvtColor(frame,thresh_frame,cv.CV_GRAY2RGB)
+				self.thresh_frame_surface=pygame.image.frombuffer(thresh_frame.imageData,(frame.width,frame.height),'RGB')
+
 			# I think these functions are too specialized for transforms
 			cv.cvSmooth(frame,frame,cv.CV_GAUSSIAN,3, 0, 0, 0 )
 			cv.cvErode(frame, frame, None, 1)
 			cv.cvDilate(frame, frame, None, 1)
+
 			num_contours,contours=cv.cvFindContours(frame,self.storage,cv.sizeof_CvContour,cv.CV_RETR_LIST,cv.CV_CHAIN_APPROX_NONE,cv.cvPoint(0,0))
 			if contours is None :
 				return []
@@ -49,14 +69,3 @@ class ShadowPolys(AetherTransform):
 					return final_contours
 
 		return []
-
-	# sorry alan
-	def get_frame(self) :
-		frame=self.input.read()
-
-		converted=cv.cvCreateImage(cv.cvGetSize(frame),frame.depth,3)
-		cv.cvCvtColor(frame,converted,cv.CV_GRAY2RGB)
-		frame = converted
-
-		frame_surface=pygame.image.frombuffer(frame.imageData,(frame.width,frame.height),'RGB')
-		return frame_surface

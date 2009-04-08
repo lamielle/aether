@@ -59,3 +59,7 @@ def build(bld):
 	install_files('PREFIX',inst_dir,'sine_2.wav')
 	install_files('PREFIX',inst_dir,'sine_3.wav')
 	install_files('PREFIX',inst_dir,'sine_4.wav')
+
+	install_files('PREFIX',inst_dir,'pop.wav')
+	install_files('PREFIX',inst_dir,'smash.wav')
+	install_files('PREFIX',inst_dir,'techno.wav')

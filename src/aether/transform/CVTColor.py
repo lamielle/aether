@@ -22,5 +22,9 @@ class CVTColor(AetherTransform):
 			else:
 				new_frame=cv.cvCreateImage(cv.cvSize(frame.width,frame.height),frame.depth,self.num_channels)
 			cv.cvCvtColor(frame,new_frame,self.convert_method)
-			frame=new_frame
+			if self.num_channels == 1:
+				cv.cvMerge(new_frame,new_frame,new_frame,None,frame)
+			else :
+				frame=new_frame
+
 		return frame
