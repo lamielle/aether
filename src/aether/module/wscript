@@ -20,4 +20,5 @@ def build(bld):
 	install_files('PREFIX',inst_dir,'CatchOSIfUCan.py')
 	install_files('PREFIX',inst_dir,'SoundMosaic.py')
 	install_files('PREFIX',inst_dir,'PymunkModule.py')
+	install_files('PREFIX',inst_dir,'LaserPointerTest.py')
 

@@ -8,13 +8,17 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="744.09448819"
-   height="1052.3622047"
+   width="721.25"
+   height="721.25"
    id="svg2"
    sodipodi:version="0.32"
    inkscape:version="0.46"
    sodipodi:docname="checkerboard.svg"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   version="1.0"
+   inkscape:export-filename="/home/labadorf/development/aether-adam/data/checkerboard.jpg.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
      id="defs4">
     <inkscape:perspective
@@ -35,14 +39,14 @@
      objecttolerance="10"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.59522678"
-     inkscape:cx="356.64869"
-     inkscape:cy="660.87211"
+     inkscape:zoom="0.45229321"
+     inkscape:cx="517.24407"
+     inkscape:cy="242.52643"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1014"
-     inkscape:window-height="779"
+     inkscape:window-width="689"
+     inkscape:window-height="775"
      inkscape:window-x="0"
      inkscape:window-y="0"
      showguides="true"
@@ -61,88 +65,89 @@
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
-    <g
-       id="g2443"
-       transform="translate(24.482347,48.964694)"
-       inkscape:export-filename="/home/labadorf/development/aether-adam/examples/checkerboard.png"
-       inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90">
-      <path
-         id="path2437"
-         d="M -22.965522,-48.679808 L -22.965522,670.13668"
-         style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.82659302pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <path
-         id="path2435"
-         d="M 67.061572,-48.679808 L 67.061572,670.13668"
-         style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.82659302pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <path
-         id="path2433"
-         d="M 157.08867,-48.679808 L 157.08867,670.13668"
-         style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.82659302pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <path
-         id="path2431"
-         d="M 247.11577,-48.679808 L 247.11577,670.13668"
-         style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.82659302pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <path
-         id="path2429"
-         d="M 337.14286,-48.679808 L 337.14286,670.13668"
-         style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.82659302pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <path
-         id="path2427"
-         d="M 427.16995,-48.679808 L 427.16995,670.13668"
-         style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.82659302pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <path
-         id="path2425"
-         d="M 517.19705,-48.679808 L 517.19705,670.13668"
-         style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.82659302pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <path
-         id="path2423"
-         d="M 607.22414,-48.679808 L 607.22414,670.13668"
-         style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.82659302pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <path
-         id="path2421"
-         d="M 697.25124,-48.679808 L 697.25124,670.13668"
-         style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.82659302pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <path
-         id="path2419"
-         d="M -22.867494,-48.58178 L 696.76254,-48.58178"
-         style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.98343763pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <path
-         id="path2417"
-         d="M -22.867494,41.420807 L 696.76254,41.420807"
-         style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.98343763pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <path
-         id="path2415"
-         d="M -22.867494,131.42339 L 696.76254,131.42339"
-         style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.98343763pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <path
-         id="path2413"
-         d="M -22.867494,221.42598 L 696.76254,221.42598"
-         style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.98343763pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <path
-         id="path2411"
-         d="M -22.867494,311.42857 L 696.76254,311.42857"
-         style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.98343763pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <path
-         id="path2409"
-         d="M -22.867494,401.43116 L 696.76254,401.43116"
-         style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.98343763pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <path
-         id="path2407"
-         d="M -22.867494,491.43375 L 696.76254,491.43375"
-         style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.98343763pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <path
-         id="path2405"
-         d="M -22.867494,581.43633 L 696.76254,581.43633"
-         style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.98343763pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <path
-         id="path2403"
-         d="M -22.867494,671.43892 L 696.76254,671.43892"
-         style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.98343763pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-    </g>
+     id="layer1"
+     transform="translate(-1.0002044,0.2317346)">
     <rect
-       style="fill:#000000;fill-opacity:0.96078432;fill-rule:nonzero;stroke:none;stroke-width:10;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:9.82835007;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.96078431"
+       id="rect2442"
+       width="715.24707"
+       height="712.50519"
+       x="5.1940279"
+       y="2.8963144" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.82659302pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 1.516825,0.284886 L 1.516825,719.10137"
+       id="path2437" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.82659302pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 91.543919,0.284886 L 91.543919,719.10137"
+       id="path2435" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.82659302pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 181.57102,0.284886 L 181.57102,719.10137"
+       id="path2433" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.82659302pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 271.59812,0.284886 L 271.59812,719.10137"
+       id="path2431" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.82659302pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 361.62521,0.284886 L 361.62521,719.10137"
+       id="path2429" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.82659302pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 451.6523,0.284886 L 451.6523,719.10137"
+       id="path2427" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.82659302pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 541.6794,0.284886 L 541.6794,719.10137"
+       id="path2425" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.8270689pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 631.70649,0.28548103 L 631.70649,719.92988"
+       id="path2423" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.82659302pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 721.73359,0.284886 L 721.73359,719.10137"
+       id="path2421" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.98343763pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 1.614853,0.382914 L 721.24489,0.382914"
+       id="path2419" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.98343763pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 1.614853,90.385501 L 721.24489,90.385501"
+       id="path2417" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.98343763pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 1.614853,180.38808 L 721.24489,180.38808"
+       id="path2415" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.98343763pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 1.614853,270.39067 L 721.24489,270.39067"
+       id="path2413" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.98343763pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 1.614853,360.39326 L 721.24489,360.39326"
+       id="path2411" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.98343763pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 1.614853,450.39585 L 721.24489,450.39585"
+       id="path2409" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.98343763pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 1.614853,540.39844 L 721.24489,540.39844"
+       id="path2407" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.98343763pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 1.614853,630.40102 L 721.24489,630.40102"
+       id="path2405" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:0.98343763pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 1.614853,720.40361 L 721.24489,720.40361"
+       id="path2403" />
+    <rect
+       style="fill:#000000;fill-opacity:0.96078431;fill-rule:nonzero;stroke:none;stroke-width:10;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect2463"
        width="89.671707"
        height="89.671707"
@@ -166,14 +171,14 @@
        id="rect3237"
        width="89.671707"
        height="89.671707"
-       x="363.09689"
-       y="2.1322138"
+       x="361.71506"
+       y="0.47399747"
        inkscape:export-filename="/home/labadorf/development/aether-adam/examples/checkerboard.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <rect
-       y="2.1322138"
-       x="541.1803"
+       y="0.75036687"
+       x="541.45667"
        height="89.671707"
        width="89.671707"
        id="rect3239"
@@ -196,8 +201,8 @@
        id="rect3243"
        width="89.671707"
        height="89.671707"
-       x="272.69513"
-       y="91.173904"
+       x="271.58966"
+       y="90.344795"
        inkscape:export-filename="/home/labadorf/development/aether-adam/examples/checkerboard.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
@@ -242,10 +247,10 @@
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <rect
-       y="181.89563"
-       x="363.09689"
-       height="89.671707"
-       width="89.671707"
+       y="179.89563"
+       x="361.09689"
+       height="90.777184"
+       width="90.777184"
        id="rect3253"
        style="fill:#000000;fill-opacity:0.96078431;fill-rule:nonzero;stroke:none;stroke-width:10;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:export-filename="/home/labadorf/development/aether-adam/examples/checkerboard.png"
@@ -256,8 +261,8 @@
        id="rect3255"
        width="89.671707"
        height="89.671707"
-       x="541.1803"
-       y="181.89563"
+       x="541.73303"
+       y="180.51379"
        inkscape:export-filename="/home/labadorf/development/aether-adam/examples/checkerboard.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
@@ -326,14 +331,14 @@
        id="rect3269"
        width="89.671707"
        height="89.671707"
-       x="363.09689"
-       y="361.65906"
+       x="361.99142"
+       y="360.55359"
        inkscape:export-filename="/home/labadorf/development/aether-adam/examples/checkerboard.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <rect
-       y="361.65906"
-       x="541.1803"
+       y="360.82996"
+       x="541.45667"
        height="89.671707"
        width="89.671707"
        id="rect3271"
@@ -402,8 +407,8 @@
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <rect
-       y="541.42249"
-       x="363.09689"
+       y="540.59338"
+       x="361.71506"
        height="89.671707"
        width="89.671707"
        id="rect3285"
@@ -416,8 +421,8 @@
        id="rect3287"
        width="89.671707"
        height="89.671707"
-       x="541.1803"
-       y="541.42249"
+       x="541.73303"
+       y="540.59338"
        inkscape:export-filename="/home/labadorf/development/aether-adam/examples/checkerboard.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
@@ -452,7 +457,7 @@
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <rect
-       y="630.14417"
+       y="630.42053"
        x="631.90204"
        height="89.671707"
        width="89.671707"

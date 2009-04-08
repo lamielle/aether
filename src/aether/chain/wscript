@@ -17,3 +17,4 @@ def build(bld):
 
 	install_files('PREFIX',inst_dir,'ShadowPolyChain.py')
 	install_files('PREFIX',inst_dir,'MouseChain.py')
+	install_files('PREFIX',inst_dir,'DebugLaserPointerChain.py')

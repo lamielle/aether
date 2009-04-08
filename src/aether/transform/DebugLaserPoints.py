@@ -11,13 +11,15 @@ from opencv import cv
 from aether.core import AetherTransform
 import pygame
 
-class LaserPoints(AetherTransform):
+class DebugLaserPoints(AetherTransform):
 
-	input_names=('thresh',)
+	input_names=('thresh2pg','red2pg','camera','thresh',)
 	defaults={}
 
 	def read(self):
-
+		src = self.camera.read()
+		thresh = self.thresh2pg.read()
+		red = self.red2pg.read()
 		raw_thresh = self.thresh.read()
 
 		cvt_red = cv.cvCreateImage(cv.cvSize(raw_thresh.width,raw_thresh.height),raw_thresh.depth,1)
@@ -26,7 +28,5 @@ class LaserPoints(AetherTransform):
 		cvpt_max = cv.cvPoint(0,0)
 		t = cv.cvMinMaxLoc(cvt_red,cvpt_min,cvpt_max)
 
-		if cvp_max.x == 0 and cvpt_max.y == 0 :
-			return []
-		return [(cvpt_max.x,cvpt_max.y)]
+		return src,thresh,red,(cvpt_max.x,cvpt_max.y)
 

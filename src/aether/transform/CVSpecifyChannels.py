@@ -18,10 +18,10 @@ class CVSpecifyChannels(AetherTransform):
 	def read(self):
 		frame = self.input.read()
 
-		# image we'll eventually return
-
 		# which channels to combine
 		cv_rs = [None]*4
+
+		#self.debug_print('channels:%s'%self.channels)
 
 		# if frame only has one channel, just return it
 		if frame.nChannels == 1 :
@@ -31,10 +31,12 @@ class CVSpecifyChannels(AetherTransform):
 			for i in self.channels :
 				cv_rs[i] = cv.cvCreateImage(cv.cvSize(frame.width,frame.height),frame.depth,1)
 
+			#self.debug_print(cv_rs)
 			# extract the color channel
-			cv.cvSplit(cv_rs[0],cv_rs[1],cv_rs[2],cv_rs[3],cvt_im)
+			#print 'frame.nChannels',frame.nChannels
+			cv.cvSplit(frame,cv_rs[0],cv_rs[1],cv_rs[2],cv_rs[3])
 
-		cvt_im = cv.cvCreateImage(cv.cvSize(frame.width,frame.height),frame.depth,3)
-		cv.cvMerge(cv_rs[0],cv_rs[1],cv_rs[2],cv_rs[3],cvt_im)
+		#cvt_im = cv.cvCreateImage(cv.cvSize(frame.width,frame.height),frame.depth,3)
+		cv.cvMerge(cv_rs[0],cv_rs[1],cv_rs[2],cv_rs[3],frame)
 
-		return cvt_im
+		return frame
