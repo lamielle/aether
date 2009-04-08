@@ -25,14 +25,13 @@ class FaceTiler(AetherModule) :
 		faces = self.faces.read()
 
 		for i,face in enumerate(faces) :
-			face = [(int(x[0]*self.dims[0]),int(x[1]*self.dims[1])) for x in face]
 			dims = face[1][0]-face[0][0], face[2][1]-face[1][1]
 			faces[i] = pygame.Rect(face[0],dims)
 
 		self.sprite_tracker.update(faces,frame)
 
-		print 'Sprite ages:',self.sprite_tracker._sprite_ages
 		for i,sprite in enumerate(self.sprite_tracker.sprites) :
+			screen.blit(sprite.image,self.grid_coords[i])
 			scaled_face_surf = pygame.transform.scale(sprite.image,self.pane_size)
 			screen.blit(scaled_face_surf,self.grid_coords[i])
 
