@@ -190,15 +190,15 @@ class AetherDriver(AetherObject):
 		#Initialize pygame
 		pygame.init()
 
+		#Setup the screen
+		self.screen=pygame.display.set_mode(self.dims)
+
 		#Attempt to load the modules specified in settings
 		self.load_modules()
 
 		#Make sure we have one or more modules ready to run
 		if 0==len(self.registered_modules):
 			raise AetherComponentLoadError('Aether must have at least one module registered to run.')
-
-		#Setup the screen
-		self.screen=pygame.display.set_mode(self.dims)
 
 		clock = pygame.time.Clock()
 		running = True
