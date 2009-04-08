@@ -59,7 +59,7 @@ class AetherDriver(AetherObject):
 	#-Creates and sets up all chains the module needs
 	#-Registers the module
 	def setup_module(self,module):
-		#Define the 'name' of a module to be its class
+		#Define the 'name' of a module to be its class name
 		module.name=module.__class__.__name__
 
 		#Create the chains the module depends on
@@ -77,8 +77,23 @@ class AetherDriver(AetherObject):
 			#Problem while setting up chains
 			raise AetherComponentLoadError("Error while setting up chains for module '%s'..."%(module.name),e)
 		else:
-			#Setting up chains went fine (no exceptions raised), register the module
+			#Setting up chains went fine (no exceptions raised)
+
+			#Tell the module to init
+			self.call_init(module)
+
+			#Register the module
 			self.register_module(module)
+
+	#Attempts to call the init method of the given target object
+	def call_init(self,target):
+		#Get the init method of the targets's class
+		try:
+			init_method=target.__class__.init
+		except AttributeError as e: pass
+		else:
+			#Call the init method since we found one
+			init_method(target)
 
 	#Sets up the given chain:
 	#-Loads any settings specified by the chain
@@ -125,13 +140,7 @@ class AetherDriver(AetherObject):
 		else:
 			self.settings_load(transform.name,defaults,test_exists=True)
 
-		#Get the init method of the transform's class
-		try:
-			init_method=transform.__class__.init
-		except AttributeError as e: pass
-		else:
-			#Call the init method since we found one
-			init_method(transform)
+		self.call_init(transform)
 
 	#Sets up the dependences between transforms
 	#The dependences should be given as a dictionary mapping

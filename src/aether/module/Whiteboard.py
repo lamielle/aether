@@ -13,7 +13,7 @@ class Whiteboard(AetherModule):
 	#Chains this module needs
 	chains={'input':'LaserPointerChain'}
 
-	def __init__(self) :
+	def init(self):
 		self.checkerboard = pygame.image.load(self.file_path('checkerboard.png'))
 		self.checkerboard = pygame.transform.scale(self.checkerboard,self.dims)
 		self.show_capture = False

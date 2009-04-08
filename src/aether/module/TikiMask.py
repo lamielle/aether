@@ -17,7 +17,7 @@ class TikiMask(AetherModule):
 	#Chains this module needs
 	chains={'camera':'ScaledCameraChain','faces':'FacesChain'}
 
-	def __init__(self):
+	def init(self):
 		# load our image, this will look in the directory where the file is executed
 		self.tiki=pygame.image.load(self.file_path('tiki.png'))
 

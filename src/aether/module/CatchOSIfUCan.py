@@ -12,7 +12,7 @@ class CatchOSIfUCan(AetherModule) :
 
 	chains={'input':'ShadowPolyChain'}
 
-	def __init__(self) :
+	def init(self):
 
 		# set up the images
 		#image_fns = ['images/freebsd-logo.png','images/fedora-logo.png','images/ubuntu-logo.png','images/windows-logo.png','images/gentoo-logo.png','images/e-logo.png','images/debian-logo.png','images/opensuse-logo.png']

@@ -13,7 +13,7 @@ class CalibrateModule(AetherModule):
 	#Chains this module needs
 	chains={'camera':'PerspectiveChain'}
 
-	def __init__(self) :
+	def init(self):
 		self.checkerboard = pygame.image.load(self.file_path('checkerboard2.png'))
 		self.checkerboard = pygame.transform.scale(self.checkerboard,self.dims)
 		self.doframe = False

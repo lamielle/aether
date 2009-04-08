@@ -20,7 +20,7 @@ class PymunkModule(AetherModule):
 	#chains={'mouse':'MouseChain'}
 	#chains={'shadow':'ShadowPolyChain'}
 
-	def __init__(self) :
+	def init(self):
 		self.checkerboard = pygame.image.load(self.file_path('checkerboard.png'))
 		self.checkerboard = pygame.transform.scale(self.checkerboard,self.dims)
 
