@@ -28,4 +28,3 @@ def build(bld):
 	install_files('PREFIX',inst_dir,'CVInvert.py')
 	install_files('PREFIX',inst_dir,'PyGameMouse.py')
 	install_files('PREFIX',inst_dir,'DebugLaserPoints.py')
-	install_files('PREFIX',inst_dir,'CVContourPolys.py')
