@@ -26,7 +26,7 @@ class LaserPoints(AetherTransform):
 		cvpt_max = cv.cvPoint(0,0)
 		t = cv.cvMinMaxLoc(cvt_red,cvpt_min,cvpt_max)
 
-		if cvp_max.x == 0 and cvpt_max.y == 0 :
+		if cvpt_max.x == 0 and cvpt_max.y == 0 :
 			return []
 		return [(cvpt_max.x,cvpt_max.y)]
 

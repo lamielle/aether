@@ -13,7 +13,8 @@ class LaserPointerTest(AetherModule):
 	#Chains this module needs
 	#chains={'camera':'PerspectiveChain'}
 	#chains = {'laser':'DebugLaserPointerChain'}
-	chains = {'laser':'LaserPointerChain'}
+	#chains = {'laser':'LaserPointerChain'}
+	chains = {'laser':'LaserPointerSaviorChain'}
 
 	def __init__(self) :
 		self.checkerboard = pygame.image.load(self.file_path('checkerboard.png'))

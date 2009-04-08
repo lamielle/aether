@@ -20,3 +20,4 @@ def build(bld):
 	install_files('PREFIX',inst_dir,'ShadowPolySaviorChain.py')
 	install_files('PREFIX',inst_dir,'MouseChain.py')
 	install_files('PREFIX',inst_dir,'DebugLaserPointerChain.py')
+	install_files('PREFIX',inst_dir,'LaserPointerSaviorChain.py')
