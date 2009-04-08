@@ -14,7 +14,7 @@ import pygame
 class LaserPointsSavior(AetherTransform):
 
 	input_names=('input',)
-	defaults={'debug':False}
+	defaults={'debug':False,'enabled':True}
 
 	def read(self):
 
@@ -26,8 +26,8 @@ class LaserPointsSavior(AetherTransform):
 
 		if self.enabled :
 
-			cvt_red = cv.cvCreateImage(cv.cvSize(raw_thresh.width,raw_thresh.height),raw_thresh.depth,1)
-			cv.cvSplit(raw_thresh,None,None,cvt_red,None)
+			cvt_red = cv.cvCreateImage(cv.cvSize(frame.width,frame.height),frame.depth,1)
+			cv.cvSplit(frame,None,None,cvt_red,None)
 
 			if self.debug :
 				red_frame = cv.cvCreateImage(cv.cvSize(cvt_red.width,cvt_red.height),cvt_red.depth,3)
@@ -48,6 +48,7 @@ class LaserPointsSavior(AetherTransform):
 			cvpt_max = cv.cvPoint(0,0)
 			t = cv.cvMinMaxLoc(cvt_red,cvpt_min,cvpt_max)
 
+			print t
 			if cvpt_max.x == 0 and cvpt_max.y == 0 :
 				return []
 			return [(cvpt_max.x,cvpt_max.y)]

@@ -1,0 +1,147 @@
+\documentclass{beamer}
+
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{pstricks,pst-node,pst-text,pst-3d}
+\usepackage{multicol}
+
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  %\useoutertheme{default}
+%	\useinnertheme{circles}
+%  \usecolortheme{default}
+  %\setbeamercovered{transparent}
+}
+
+\definecolor{Brown}{cmyk}{0,0.81,1,0.60}
+\definecolor{OliveGreen}{cmyk}{0.64,0,0.95,0.40}
+\definecolor{CadetBlue}{cmyk}{0.62,0.57,0.23,0}
+\lstset{ %
+language=TeX,                % choose the language of the code
+basicstyle=\footnotesize,       % the size of the fonts that are used for the code
+backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+showspaces=false,               % show spaces adding particular underscores
+showstringspaces=false,         % underline spaces within strings
+stringstyle=\ttfamily,
+showtabs=false,                 % show tabs within strings adding particular underscores
+frame=none,                   % adds a frame around the code
+tabsize=2,                      % sets default tabsize to 2 spaces
+captionpos=b,                   % sets the caption-position to bottom
+breaklines=true,                % sets automatic line breaking
+breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+commentstyle=\color{CadetBlue},
+identifierstyle=\ttfamily\color{Brown}\bfseries,
+keywordstyle=\ttfamily\color{OliveGreen},
+escapeinside={\%*}{*)}          % if you want to add a comment within your code
+}
+
+
+\newenvironment{specialframe}{\begin{frame}[fragile,environment=specialframe]}{\end{frame}}
+
+\begin{document}
+
+\title[]
+{{\AE}ther: Digital Interactivity System}
+
+%\subtitle
+%{An even briefer subtitle}
+
+\date {\today}
+
+\author[Colorado State University]
+{Adam Labadorf and Alan LaMielle} % (optional)
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{What is {\AE}ther?}
+
+\begin{itemize}
+\item Framework for easily developing interactive applications (i.e. {\it games})
+\item Utilizes input from diverse sources (e.g. camera, IR, accelerometer, \& c.)
+\item Rapid prototyping environment for external input sources
+\end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}{What does it do?}
+
+\begin{itemize}
+
+\item Use your shadow as input to a computer program 
+\begin{itemize}
+\item Fun (EncouragerModule, CatchOSIfUCan, TileMosaic)
+\item Physics simulations
+\end{itemize}
+
+\item Laser pointer detection:
+\begin{itemize}
+\item Control presentations (you're watching it!)
+\item Play space-invaders type games
+\end{itemize}
+
+\item Face Detection:
+\begin{itemize}
+\item Put masks on people (TikiMasks)
+\item Show who's been in a building (FaceTiler)
+\item Which faculty member do you most look like?
+\end{itemize}
+
+\end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}{How does it work?}
+
+\begin{itemize}
+\item Written in {\tt Python} using the {\tt pygame} package and {\tt opencv}
+\item Developers write {\it modules} that fit into the {\AE}ther framework
+\item Input is provided through {\it chains} composed of transforms, which hide the details of input capture
+\end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}{Why is this Computer Science?}
+
+\begin{itemize}
+\item Intersection of many computer related fields including (but not limited to):
+\begin{itemize}
+\item Computer vision and graphics
+\item Software engineering
+\item Human Computer Interaction
+\item Game development
+\end{itemize}
+\item Provides an easy way to develop applications with unconventional/novel input methods
+\item Implements good software engineering and project management practices
+\begin{itemize}
+\item version control
+\item bug tracking
+\item modular code design
+\end{itemize}
+\item It's really cool
+
+\end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}
+
+\begin{center}
+\huge
+THIS.....is Computer Science
+\end{center}
+
+\end{frame}
+
+
+\end{document}

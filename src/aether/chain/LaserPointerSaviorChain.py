@@ -7,7 +7,7 @@ from aether.core import AetherTransformChain
 class LaserPointerSaviorChain(AetherTransformChain):
 
 	#Transforms in this chain: names and their type
-	transforms={'laser':'LaserPoints',
+	transforms={'laser':'LaserPointsSavior',
 	            #'thresh2pg':'CVMatPyGameSurface',
 	            #'red2pg':'CVMatPyGameSurface',
 	            #'camera':'CVMatPyGameSurface',
